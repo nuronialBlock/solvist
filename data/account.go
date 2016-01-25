@@ -12,9 +12,9 @@ type Account struct {
 	Name   string        `bson:"name"`
 	Handle string        `bson:"handle"`
 
-	Password AccountPassword{} `bson:"password"`
-	Emails []AccountEmail{} `bson:"emails"`
-	Banned bool `bson:"banned"`
+	Password AccountPassword `bson:"password"`
+	Emails   []AccountEmail  `bson:"emails"`
+	Banned   bool            `bson:"banned"`
 
 	CreatedAt  time.Time `bson:"created_at"`
 	ModifiedAt time.Time `bson:"modified_at"`
