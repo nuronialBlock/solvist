@@ -1,3 +1,4 @@
+// Copyright @nuronial_block
 package data
 
 type AccountPassword struct {
