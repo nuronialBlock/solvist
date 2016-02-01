@@ -2,9 +2,11 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/nuronialBlock/solvist/solvist/data"
+	"github.com/nuronialBlock/solvist/solvist/ui"
 )
 
 func main() {
@@ -12,4 +14,12 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	http.Handle("/", ui.NewServer())
+
+	err = http.ListenAndServe(os.Getenv("ADDR"), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Printf("Lightening on %s", os.Getenv("ADDR"))
 }
