@@ -17,9 +17,10 @@ func main() {
 
 	http.Handle("/", ui.NewServer())
 
+	log.Printf("Lightening on %s", os.Getenv("ADDR"))
+
 	err = http.ListenAndServe(os.Getenv("ADDR"), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Printf("Lightening on %s", os.Getenv("ADDR"))
 }
