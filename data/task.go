@@ -9,6 +9,7 @@ import (
 
 type Task struct {
 	ID          bson.ObjectId `bson:"_id"`
+	AccountID   bson.ObjectId `bson:"account_id"`
 	ProblemName string        `bson:"problem_name"`
 	ProblemOj   string        `bson:"problem_oj"`
 	ProblemID   string        `bson:"problem_id"`
@@ -17,6 +18,15 @@ type Task struct {
 	CreatedAt  time.Time `bson:"created_at"`
 
 	Solved bool `bson:"solved"`
+}
+
+func ListTasksAccount(id bson.ObjectId) ([]Task, error) {
+	tasks := []Task{}
+	err := sess.DB("").C(accountC).FindId(id).All(&tasks)
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
 }
 
 func (t *Task) Put() error {
