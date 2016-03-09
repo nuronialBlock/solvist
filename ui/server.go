@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-var router = mux.NewRouter()
+var Router = mux.NewRouter()
 
 type Server struct {
 	router *mux.Router
@@ -18,6 +18,6 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 func NewServer() *Server {
 	return &Server{
-		router: router,
+		router: Router,
 	}
 }
