@@ -11,7 +11,7 @@ type Task struct {
 	ID          bson.ObjectId `bson:"_id"`
 	AccountID   bson.ObjectId `bson:"account_id"`
 	ProblemName string        `bson:"problem_name"`
-	ProblemOj   string        `bson:"problem_oj"`
+	ProblemOJ   string        `bson:"problem_oj"`
 	ProblemID   string        `bson:"problem_id"`
 
 	ModifiedAt time.Time `bson:"modified_at"`
