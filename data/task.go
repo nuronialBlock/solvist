@@ -1,4 +1,5 @@
-// Copyright @nuronial_block
+// Copyright 2016 The Solvist Author(s). All rights reserved.
+
 package data
 
 import (
@@ -20,6 +21,8 @@ type Task struct {
 	Solved bool `bson:"solved"`
 }
 
+// ListTasksAccount retrieves a list of tasks form database for ID and returns,
+// if successful, an array of Task object that can be used for showing tasks list.
 func ListTasksAccount(id bson.ObjectId) ([]Task, error) {
 	tasks := []Task{}
 	err := sess.DB("").C(accountC).FindId(id).All(&tasks)
@@ -29,6 +32,7 @@ func ListTasksAccount(id bson.ObjectId) ([]Task, error) {
 	return tasks, nil
 }
 
+// Put puts data into database.
 func (t *Task) Put() error {
 	t.ModifiedAt = time.Now()
 	if t.ID == "" {

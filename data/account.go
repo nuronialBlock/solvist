@@ -1,4 +1,7 @@
-// Copyright @nuronial_block
+// Copyright 2016 The Solvist Author(s). All rights reserved.
+
+// Package data contains
+// all the data structures and database related codes.
 package data
 
 import (

@@ -1,4 +1,5 @@
-// Copyright @nuronial_block
+// Copyright 2016 The Solvist Author(s). All rights reserved.
+
 package data
 
 type AccountPassword struct {
