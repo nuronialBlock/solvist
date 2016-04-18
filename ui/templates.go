@@ -10,4 +10,4 @@ import (
 type TplCreateNewFormValues struct{}
 
 // TplCreateNewForm generates new form for user.
-var TplCreateNewForm = template.Must(template.ParseFiles("layout.gohtml", "createnewformpage.gohtml"))
+var TplCreateNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/taskNewFormPage.gohtml", "ui/templates/taskNewForm.gohtml"))
