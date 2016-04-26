@@ -21,11 +21,11 @@ type Task struct {
 	Solved bool `bson:"solved"`
 }
 
-// ListTasksAccount retrieves a list of tasks form database for ID and returns,
-// if successful, an array of Task object that can be used for showing tasks list.
-func ListTasksAccount(id bson.ObjectId) ([]Task, error) {
+// ListTasks retrieves a list of tasks form database, if successful,
+// an array of Task object that can be used for showing tasks list.
+func ListTasks() ([]Task, error) {
 	tasks := []Task{}
-	err := sess.DB("").C(accountC).FindId(id).All(&tasks)
+	err := sess.DB("").C(taskC).Find(nil).All(&tasks)
 	if err != nil {
 		return nil, err
 	}
