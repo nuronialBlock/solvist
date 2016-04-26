@@ -2,6 +2,7 @@
 
 package data
 
+// AccountPassword stores the password informations.
 type AccountPassword struct {
 	Salt       []byte `bson:"salt"`
 	Iteration  int    `bson:"iteration"`
