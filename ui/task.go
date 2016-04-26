@@ -2,7 +2,11 @@
 
 package ui
 
-import "net/http"
+import (
+	"net/http"
+
+	"github.com/nuronialBlock/solvist/solvist/data"
+)
 
 // ServeTaskNewForm serves new task form requested by r.
 func ServeTaskNewForm(w http.ResponseWriter, r *http.Request) {
@@ -12,19 +16,31 @@ func ServeTaskNewForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//
-// // HandleTaskCreate handles new task to create from the form submission.
-// func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
-//
-// }
+// HandleTaskCreate handles new task to create from the form submission.
+func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
+	err := r.ParseForm()
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+	task := data.Task{}
+	task.ProblemOJ = r.FormValue("ProblemOJ")
+	task.ProblemID = r.FormValue("ProblemID")
+
+	err = task.Put()
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+
+	http.Redirect(w, r, "/tasks/new", http.StatusSeeOther)
+}
 
 func init() {
 	Router.NewRoute().
 		Methods("GET").
 		Path("/tasks/new").
 		HandlerFunc(ServeTaskNewForm)
-	// Router.NewRoute().
-	// 	Methods("POST").
-	// 	Path("/tasks/new").
-	// 	HandlerFunc(HandleTaskCreate)
+	Router.NewRoute().
+		Methods("POST").
+		Path("/tasks/new").
+		HandlerFunc(HandleTaskCreate)
 }
