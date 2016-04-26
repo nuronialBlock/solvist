@@ -10,6 +10,7 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
+// Account stores the informations of an user.
 type Account struct {
 	ID     bson.ObjectId `bson:"_id"`
 	Name   string        `bson:"name"`
