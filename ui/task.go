@@ -34,6 +34,20 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/tasks/new", http.StatusSeeOther)
 }
 
+// ServeTasksList serves the list of the tasks.
+func ServeTasksList(w http.ResponseWriter, r *http.Request) {
+	tasks, err := data.ListTasks()
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+	err = TplServeListTasks.Execute(w, TplServeListTasksValues{
+		Tasks: tasks,
+	})
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("GET").
@@ -43,4 +57,8 @@ func init() {
 		Methods("POST").
 		Path("/tasks/new").
 		HandlerFunc(HandleTaskCreate)
+	Router.NewRoute().
+		Methods("GET").
+		Path("/tasks").
+		HandlerFunc(ServeTasksList)
 }
