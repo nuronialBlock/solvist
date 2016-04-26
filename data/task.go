@@ -8,9 +8,9 @@ import (
 	"labix.org/v2/mgo/bson"
 )
 
+// Task stores the task informations of an user.
 type Task struct {
 	ID          bson.ObjectId `bson:"_id"`
-	AccountID   bson.ObjectId `bson:"account_id"`
 	ProblemName string        `bson:"problem_name"`
 	ProblemOJ   string        `bson:"problem_oj"`
 	ProblemID   string        `bson:"problem_id"`
