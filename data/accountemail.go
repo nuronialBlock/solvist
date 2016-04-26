@@ -4,6 +4,7 @@ package data
 
 import "time"
 
+// AccountEmail stores the informations of user Email.
 type AccountEmail struct {
 	Address     string `bson:"address"`
 	AddressNorm string `bson:"address_norm"`
