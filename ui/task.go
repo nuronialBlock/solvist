@@ -31,7 +31,7 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 		ServeInternalServerError(w, r)
 	}
 
-	http.Redirect(w, r, "/tasks/new", http.StatusSeeOther)
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
 // ServeTasksList serves the list of the tasks.
