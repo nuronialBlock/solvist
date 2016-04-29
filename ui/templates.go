@@ -8,16 +8,16 @@ import (
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
 
-// TplCreateNewFormValues passes the new form values.
-type TplCreateNewFormValues struct{}
+// TplTaskNewFormValues passes the new form values.
+type TplTaskNewFormValues struct{}
 
-// TplCreateNewForm generates new form for user.
-var TplCreateNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/taskNewFormPage.gohtml", "ui/templates/taskNewForm.gohtml"))
+// TplTaskNewForm generates new form for user.
+var TplTaskNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/taskNewFormPage.gohtml", "ui/templates/taskNewForm.gohtml"))
 
-// TplServeListTasksValues stores the values of ServeListTasks template.
-type TplServeListTasksValues struct {
+// TplListTasksValues stores the values of tasks.
+type TplListTasksValues struct {
 	Tasks []data.Task
 }
 
-// TplServeListTasks renders Tasks.
-var TplServeListTasks = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/listTasksPage.gohtml", "ui/templates/listTasks.gohtml", "ui/templates/listTask.gohtml"))
+// TplListTasks renders Tasks.
+var TplListTasks = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/listTasksPage.gohtml", "ui/templates/listTasks.gohtml", "ui/templates/listTask.gohtml"))

@@ -10,7 +10,7 @@ import (
 
 // ServeTaskNewForm serves new task form requested by r.
 func ServeTaskNewForm(w http.ResponseWriter, r *http.Request) {
-	err := TplCreateNewForm.Execute(w, TplCreateNewFormValues{})
+	err := TplTaskNewForm.Execute(w, TplTaskNewFormValues{})
 	if err != nil {
 		ServeInternalServerError(w, r)
 	}
@@ -40,7 +40,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ServeInternalServerError(w, r)
 	}
-	err = TplServeListTasks.Execute(w, TplServeListTasksValues{
+	err = TplListTasks.Execute(w, TplListTasksValues{
 		Tasks: tasks,
 	})
 	if err != nil {
