@@ -14,6 +14,7 @@ type Task struct {
 	ProblemName string        `bson:"problem_name"`
 	ProblemOJ   string        `bson:"problem_oj"`
 	ProblemID   string        `bson:"problem_id"`
+	ProblemURL  string        `bson:"problem_url"`
 
 	ModifiedAt time.Time `bson:"modified_at"`
 	CreatedAt  time.Time `bson:"created_at"`

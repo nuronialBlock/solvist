@@ -25,6 +25,7 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	task := data.Task{}
 	task.ProblemOJ = r.FormValue("ProblemOJ")
 	task.ProblemID = r.FormValue("ProblemID")
+	task.ProblemURL = r.FormValue("ProblemURL")
 
 	err = task.Put()
 	if err != nil {
