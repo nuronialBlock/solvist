@@ -13,7 +13,9 @@
         </td>
         <hr>
         <td>
-            <a href={{.ProblemURL}}>Problem Link</a>
+        <form action={{.ProblemURL}} method="get">
+            <button type="submit" class="btn btn-primary">Problem Link</button>
+        </form>
         </td>
     </tr>
 {{end}}
