@@ -5,6 +5,7 @@ package ui
 import (
 	"net/http"
 
+	"github.com/gorilla/schema"
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
 
@@ -16,17 +17,33 @@ func ServeTaskNewForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// TaskValues stores the values of the task.
+type TaskValues struct {
+	ProblemName string `schema:"name"`
+	ProblemOJ   string `schema:"oj"`
+	ProblemID   string `schema:"id"`
+	ProblemURL  string `schema:"url"`
+}
+
 // HandleTaskCreate handles new task to create from the form submission.
 func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		ServeInternalServerError(w, r)
 	}
+
+	taskValues := TaskValues{}
+	decoder := schema.NewDecoder()
+	err = decoder.Decode(&taskValues, r.PostForm)
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+
 	task := data.Task{}
-	task.ProblemOJ = r.FormValue("ProblemOJ")
-	task.ProblemID = r.FormValue("ProblemID")
-	task.ProblemName = r.FormValue("ProblemName")
-	task.ProblemURL = r.FormValue("ProblemURL")
+	task.ProblemOJ = taskValues.ProblemOJ
+	task.ProblemID = taskValues.ProblemID
+	task.ProblemName = taskValues.ProblemName
+	task.ProblemURL = taskValues.ProblemURL
 
 	err = task.Put()
 	if err != nil {
