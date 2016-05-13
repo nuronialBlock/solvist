@@ -44,3 +44,9 @@ func (t *Task) Put() error {
 	_, err := sess.DB("").C(taskC).UpsertId(t.ID, t)
 	return err
 }
+
+// Remove removes a task from database.
+func (t *Task) Remove() error {
+	err := sess.DB("").C(taskC).RemoveId(t.ID)
+	return err
+}
