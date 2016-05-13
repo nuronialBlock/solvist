@@ -1,9 +1,16 @@
 {{define "listTasks"}}
     <ul class="list-group">
         {{range .}}
-            <li class="list-group-item">
-                {{template "listTask" .}}
-            </li>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-10">
+                        <li class="list-group-item">
+                            {{template "listTask" .}}
+                        </li>
+                    </div>
+                </div>
+            </div>
+            <hr>
         {{end}}
     </ul>
 {{end}}
