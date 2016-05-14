@@ -22,6 +22,17 @@ type Task struct {
 	Solved bool `bson:"solved"`
 }
 
+// GetTask retrieves a task from the database.
+func GetTask(id bson.ObjectId) (Task, error) {
+	task := Task{}
+	err := sess.DB("").C(taskC).FindId(id).One(&task)
+	if err != nil {
+		return Task{}, err
+	}
+
+	return task, nil
+}
+
 // ListTasks retrieves a list of tasks form database, if successful,
 // an array of Task object that can be used for showing tasks list.
 func ListTasks() ([]Task, error) {
