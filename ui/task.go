@@ -3,6 +3,7 @@
 package ui
 
 import (
+	"fmt"
 	"net/http"
 
 	"labix.org/v2/mgo/bson"
@@ -74,6 +75,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
+	fmt.Println("Here")
 	if !bson.IsObjectIdHex(idStr) {
 		ServeNotFound(w, r)
 		return
@@ -113,6 +115,6 @@ func init() {
 		HandlerFunc(ServeTasksList)
 	Router.NewRoute().
 		Methods("POST").
-		Path("/tasks/{id}").
+		Path("/tasks/remove/{id}").
 		HandlerFunc(HandleTaskRemove)
 }
