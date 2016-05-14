@@ -9,3 +9,8 @@ import "net/http"
 func ServeInternalServerError(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 }
+
+// ServeNotFound writes Not Found error requested by r.
+func ServeNotFound(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Not Found", http.StatusNotFound)
+}

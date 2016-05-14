@@ -23,14 +23,14 @@ type Task struct {
 }
 
 // GetTask retrieves a task from the database.
-func GetTask(id bson.ObjectId) (Task, error) {
+func GetTask(id bson.ObjectId) (*Task, error) {
 	task := Task{}
 	err := sess.DB("").C(taskC).FindId(id).One(&task)
 	if err != nil {
-		return Task{}, err
+		return nil, err
 	}
 
-	return task, nil
+	return &task, nil
 }
 
 // ListTasks retrieves a list of tasks form database, if successful,

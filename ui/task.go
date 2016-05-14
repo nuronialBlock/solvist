@@ -5,6 +5,9 @@ package ui
 import (
 	"net/http"
 
+	"labix.org/v2/mgo/bson"
+
+	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
@@ -67,6 +70,34 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// HandleTaskRemove handler removes a task from the task list.
+func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	task, err := data.GetTask(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if task == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = task.Remove()
+	if err != nil {
+		ServeInternalServerError(w, r)
+	}
+
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("GET").
@@ -80,4 +111,8 @@ func init() {
 		Methods("GET").
 		Path("/tasks").
 		HandlerFunc(ServeTasksList)
+	Router.NewRoute().
+		Methods("POST").
+		Path("/tasks/{id}").
+		HandlerFunc(HandleTaskRemove)
 }
