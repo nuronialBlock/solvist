@@ -21,3 +21,11 @@ type TplListTasksValues struct {
 
 // TplListTasks renders Tasks.
 var TplListTasks = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/listTasksPage.gohtml", "ui/templates/listTasks.gohtml", "ui/templates/listTask.gohtml"))
+
+// TplTaskEditFormValues stores the values of the edited task.
+type TplTaskEditFormValues struct {
+	Task data.Task
+}
+
+// TplTaskEditForm renders task edit.
+var TplTaskEditForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/editTaskFormPage.gohtml", "ui/templates/editTaskForm.gohtml"))

@@ -98,6 +98,35 @@ func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
+// ServeTaskEditForm serves edit page for a task.
+func ServeTaskEditForm(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	task, err := data.GetTask(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if task == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = TplTaskEditForm.Execute(w, TplTaskEditFormValues{
+		Task: *task,
+	})
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("GET").
@@ -115,4 +144,8 @@ func init() {
 		Methods("POST").
 		Path("/tasks/remove/{id}").
 		HandlerFunc(HandleTaskRemove)
+	Router.NewRoute().
+		Methods("POST").
+		Path("/tasks/edit/{id}").
+		HandlerFunc(ServeTaskEditForm)
 }
