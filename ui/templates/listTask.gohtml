@@ -14,10 +14,10 @@
         <hr>
         <td>
         <div class="btn-group">
-            <form action={{.ProblemURL}} method="get">
+            <form style="float: left; margin: 5px" action={{.ProblemURL}} method="get">
                 <button type="submit" class="btn btn-primary">Problem Link</button>
             </form>
-            <form  action="/tasks/remove/{{.ID.Hex}}" method="post">
+            <form  style="float: left; margin: 5px" action="/tasks/remove/{{.ID.Hex}}" method="post">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
         </div>
