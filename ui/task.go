@@ -145,7 +145,7 @@ func init() {
 		Path("/tasks/remove/{id}").
 		HandlerFunc(HandleTaskRemove)
 	Router.NewRoute().
-		Methods("POST").
+		Methods("GET").
 		Path("/tasks/edit/{id}").
 		HandlerFunc(ServeTaskEditForm)
 }
