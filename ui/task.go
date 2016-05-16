@@ -127,6 +127,63 @@ func ServeTaskEditForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// EditedTaskValues stores the edited values of a task.
+type EditedTaskValues struct {
+	Name   string `schema:"name"`
+	Source string `schema:"oj"`
+	ID     string `schema:"id"`
+	URL    string `schema:"url"`
+}
+
+// HandleTaskEditForm restores the edited values of tasks
+// to tasks database.
+func HandleTaskEditForm(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	task, err := data.GetTask(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if task == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = r.ParseForm()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	editValues := EditedTaskValues{}
+	decoder := schema.NewDecoder()
+	err = decoder.Decode(&editValues, r.PostForm)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	task.ProblemName = editValues.Name
+	task.ProblemID = editValues.ID
+	task.ProblemOJ = editValues.Source
+	task.ProblemURL = editValues.URL
+
+	err = task.Put()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("GET").
@@ -148,4 +205,8 @@ func init() {
 		Methods("GET").
 		Path("/tasks/edit/{id}").
 		HandlerFunc(ServeTaskEditForm)
+	Router.NewRoute().
+		Methods("POST").
+		Path("/tasks/edit/{id}").
+		HandlerFunc(HandleTaskEditForm)
 }
