@@ -26,7 +26,7 @@ type Note struct {
 }
 
 // ListNotes lits all notes.
-func (n *Note) ListNotes() ([]Note, error) {
+func ListNotes() ([]Note, error) {
 	notes := []Note{}
 	err := sess.DB("").C(noteC).Find(nil).All(notes)
 	if err != nil {
