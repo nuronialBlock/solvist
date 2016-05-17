@@ -35,3 +35,19 @@ func ListNotes() ([]Note, error) {
 
 	return notes, nil
 }
+
+// Put puts note data into database.
+func (n *Note) Put() error {
+	n.ModifiedAt = time.Now()
+	if n.ID == "" {
+		n.ID = bson.NewObjectId()
+		n.CreatedAt = n.ModifiedAt
+	}
+
+	_, err := sess.DB("").C(noteC).UpsertId(n.ID, n)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
