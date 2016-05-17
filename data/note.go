@@ -24,3 +24,14 @@ type Note struct {
 	CreatedAt  time.Time `bson:"created_at"`
 	ModifiedAt time.Time `bson:"modified_at"`
 }
+
+// ListNotes lits all notes.
+func (n *Note) ListNotes() ([]Note, error) {
+	notes := []Note{}
+	err := sess.DB("").C(noteC).Find(nil).All(notes)
+	if err != nil {
+		return nil, err
+	}
+
+	return notes, nil
+}

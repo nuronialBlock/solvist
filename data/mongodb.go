@@ -12,6 +12,7 @@ var sess *mgo.Session
 const (
 	accountC = "accounts"
 	taskC    = "tasks"
+	noteC    = "notes"
 )
 
 // OpenDBSession reads an URL
