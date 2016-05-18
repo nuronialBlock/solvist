@@ -25,6 +25,17 @@ type Note struct {
 	ModifiedAt time.Time `bson:"modified_at"`
 }
 
+// GetNote retrieves a note from the database.
+func GetNote(id bson.ObjectId) (*Note, error) {
+	note := Note{}
+	err := sess.DB("").C(noteC).FindId(id).One(&note)
+	if err != nil {
+		return nil, err
+	}
+
+	return &note, nil
+}
+
 // ListNotes lits all notes.
 func ListNotes() ([]Note, error) {
 	notes := []Note{}
