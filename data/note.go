@@ -65,7 +65,7 @@ func (n *Note) Put() error {
 
 // Remove removes data from database.
 func (n *Note) Remove() error {
-	err := sess.DB("").C(noteC).Remove(n)
+	err := sess.DB("").C(noteC).RemoveId(n.ID)
 	if err != nil {
 		return err
 	}
