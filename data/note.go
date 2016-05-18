@@ -51,3 +51,13 @@ func (n *Note) Put() error {
 
 	return nil
 }
+
+// Remove removes data from database.
+func (n *Note) Remove() error {
+	err := sess.DB("").C(noteC).Remove(n)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
