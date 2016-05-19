@@ -16,6 +16,8 @@ type Task struct {
 	ProblemID   string        `bson:"problem_id"`
 	ProblemURL  string        `bson:"problem_url"`
 
+	NoteID bson.ObjectId `bson:"note_id"`
+
 	ModifiedAt time.Time `bson:"modified_at"`
 	CreatedAt  time.Time `bson:"created_at"`
 
