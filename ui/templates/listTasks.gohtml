@@ -2,6 +2,13 @@
 
 {{define "listTasks"}}
     <ul class="list-group">
+        <div class="container">
+            <form action="/tasks/new" method="get">
+                <button type="submit" class="btn btn-primary">New Tasks</button>
+            </form>
+        </div>
+        <hr>
+        
         {{range .}}
             <div class="container">
                 <div class="row">
