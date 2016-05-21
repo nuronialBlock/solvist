@@ -25,6 +25,7 @@ type NoteValues struct {
 	ProblemName string `schema:"name"`
 	ProblemOJ   string `schema:"oj"`
 	ProblemID   string `schema:"id"`
+	ProblemURL  string `schema:"url"`
 	TopicName   string `schema:"topic"`
 	Catagory    string `schema:"catagory"`
 	Text        string `schema:"text"`
@@ -48,6 +49,7 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 	note.ProblemName = formValues.ProblemName
 	note.ProblemOJ = formValues.ProblemOJ
 	note.ProblemID = formValues.ProblemID
+	note.ProblemURL = formValues.ProblemURL
 	note.TopicName = formValues.TopicName
 	note.Catagory = formValues.Catagory
 
@@ -62,7 +64,7 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 		ServeInternalServerError(w, r)
 	}
 
-	http.Redirect(w, r, "/notes", http.StatusSeeOther)
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
 func init() {
