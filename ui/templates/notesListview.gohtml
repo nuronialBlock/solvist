@@ -1,0 +1,17 @@
+{{define "notesListview"}}
+    <li class="list-group-item">
+        <tr>
+            <td>
+                <b>Problem Name: </b> {{.ProblemName}}
+            </td>
+            <hr>
+            <td>
+                <b>Problem OJ: </b> {{.ProblemOJ}}
+            </td>
+            <hr>
+            <form style="float:left, padding:5px" action="{{.ProblemURL}}">
+                <button type="submit" class="btn btn-default">Problem</button>
+            </form>
+        </tr>
+    </li>
+{{end}}

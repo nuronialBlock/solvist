@@ -1,0 +1,13 @@
+{{define "notesList"}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                {{range .}}
+                    <ul class="list-group">
+                        {{template "notesListview" .}}
+                    </ul>
+                {{end}}
+            </div>
+        </div>
+    </div>
+{{end}}
