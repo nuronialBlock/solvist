@@ -35,3 +35,11 @@ type TplNoteNewFormValues struct{}
 
 // TplNoteNewForm generates new note form for user.
 var TplNoteNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/noteNewFormPage.gohtml", "ui/templates/noteNewForm.gohtml"))
+
+// TplNotesListValues stores the value of notes.
+type TplNotesListValues struct {
+	Notes []data.Note
+}
+
+// TplNotesList serves the notes list page.
+var TplNotesList = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/notesListPage.gohtml", "ui/templates/notesList.gohtml", "ui/templates/notesListview.gohtml"))

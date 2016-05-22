@@ -67,6 +67,24 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
+// ServeNotesList renders the notes.
+func ServeNotesList(w http.ResponseWriter, r *http.Request) {
+	notes := []data.Note{}
+	notes, err := data.ListNotes()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	err = TplNotesList.Execute(w, TplNotesListValues{
+		Notes: notes,
+	})
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("Get").
@@ -76,4 +94,8 @@ func init() {
 		Methods("Post").
 		Path("/notes/new").
 		HandlerFunc(HandleNoteCreate)
+	Router.NewRoute().
+		Methods("Get").
+		Path("/notes").
+		HandlerFunc(ServeNotesList)
 }
