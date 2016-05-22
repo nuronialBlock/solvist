@@ -39,7 +39,7 @@ func GetNote(id bson.ObjectId) (*Note, error) {
 // ListNotes lits all notes.
 func ListNotes() ([]Note, error) {
 	notes := []Note{}
-	err := sess.DB("").C(noteC).Find(nil).All(notes)
+	err := sess.DB("").C(noteC).Find(nil).All(&notes)
 	if err != nil {
 		return nil, err
 	}
