@@ -6,6 +6,9 @@ import (
 	"bytes"
 	"net/http"
 
+	"labix.org/v2/mgo/bson"
+
+	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
 	"github.com/microcosm-cc/bluemonday"
 	"github.com/nuronialBlock/solvist/solvist/data"
@@ -85,6 +88,31 @@ func ServeNotesList(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// ServeNote renders note of a given note ID.
+func ServeNote(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	note, err := data.GetNote(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	err = TplNote.Execute(w, TplNoteValues{
+		Note: *note,
+	})
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("Get").
@@ -98,4 +126,8 @@ func init() {
 		Methods("Get").
 		Path("/notes").
 		HandlerFunc(ServeNotesList)
+	Router.NewRoute().
+		Methods("Get").
+		Path("/notes/view/{id}").
+		HandlerFunc(ServeNote)
 }
