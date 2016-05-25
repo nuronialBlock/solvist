@@ -1,0 +1,12 @@
+{{define "content"}}
+    <div class="row">
+        <div class="col-md-10">
+            <div class="panel panel-default">
+                <div class="panel-heading"><b>{{.Note.ProblemName}}</b></div>
+                <div class="panel-body">
+                    {{template "notePageView" .Note}}
+                </div>
+            </div>
+        </div>
+    </div>
+{{end}}

@@ -1,0 +1,32 @@
+{{define "notePageView"}}
+    <tr>
+        <td>
+            <b>Problem OJ</b>: {{.ProblemOJ}}
+        </td>
+        <hr>
+        <td>
+            <b>Problem Name</b>: {{.ProblemName}}
+        </td>
+        <hr>
+        <td>
+            <b>Problem ID</b>: {{.ProblemID}}
+        </td>
+        <hr>
+        <td>
+            <b>Topic Name</b>: {{.TopicName}}
+        </td>
+        <hr>
+        <td>
+            <b>Catagory</b>: {{.Catagory}}
+        </td>
+        <hr>
+        <td>
+            <a href="{{.ProblemURL}}">Problem URL</a>
+        </td>
+        <hr>
+        <td>
+            {{.Text | Markdown}}
+        </td>
+        <hr>
+    </tr>
+{{end}}
