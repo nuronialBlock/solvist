@@ -4,6 +4,7 @@ package ui
 
 import (
 	"bytes"
+	"html/template"
 	"net/http"
 
 	"labix.org/v2/mgo/bson"
@@ -55,12 +56,7 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 	note.ProblemURL = formValues.ProblemURL
 	note.TopicName = formValues.TopicName
 	note.Catagory = formValues.Catagory
-
-	textBytes := bytes.NewBufferString(formValues.Text).Bytes()
-	unsafe := blackfriday.MarkdownCommon(textBytes)
-	htmlBuf := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
-	html := bytes.NewBuffer(htmlBuf).String()
-	note.Text = html
+	note.Text = formValues.Text
 
 	err = note.Put()
 	if err != nil {
@@ -104,13 +100,21 @@ func ServeNote(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = TplNote.Execute(w, TplNoteValues{
+	err = TplNoteView.Execute(w, TplNoteValues{
 		Note: *note,
 	})
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
 	}
+}
+
+// Markdown parse a Markdown to HTML.
+func Markdown(m string) template.HTML {
+	textBytes := bytes.NewBufferString(m).Bytes()
+	unsafe := blackfriday.MarkdownCommon(textBytes)
+	html := bluemonday.UGCPolicy().SanitizeBytes(unsafe)
+	return template.HTML(html)
 }
 
 func init() {
@@ -128,6 +132,6 @@ func init() {
 		HandlerFunc(ServeNotesList)
 	Router.NewRoute().
 		Methods("Get").
-		Path("/notes/view/{id}").
+		Path("/notes/{id}").
 		HandlerFunc(ServeNote)
 }

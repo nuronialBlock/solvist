@@ -49,5 +49,8 @@ type TplNoteValues struct {
 	Note data.Note
 }
 
-// TplNote serves a note page.
-var TplNote = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/notePage.gohtml", "ui/templates/notePageView.gohtml"))
+// TplNote stores note's template.
+var TplNote = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/notePage.gohtml"))
+
+// TplNoteView renders a note.
+var TplNoteView = template.Must(TplNote.Funcs(template.FuncMap{"Markdown": Markdown}).ParseFiles("ui/templates/notePageView.gohtml"))
