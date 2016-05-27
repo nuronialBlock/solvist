@@ -56,19 +56,11 @@ func (n *Note) Put() error {
 	}
 
 	_, err := sess.DB("").C(noteC).UpsertId(n.ID, n)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
 
 // Remove removes data from database.
 func (n *Note) Remove() error {
 	err := sess.DB("").C(noteC).RemoveId(n.ID)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return err
 }
