@@ -33,6 +33,7 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	err := r.ParseForm()
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 
 	taskValues := TaskValues{}
@@ -40,6 +41,7 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	err = decoder.Decode(&taskValues, r.PostForm)
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 
 	task := data.Task{}
@@ -48,9 +50,18 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	task.ProblemName = taskValues.ProblemName
 	task.ProblemURL = taskValues.ProblemURL
 
+	note := data.Note{}
+	err = note.Put()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	task.NoteID = note.ID
+
 	err = task.Put()
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
