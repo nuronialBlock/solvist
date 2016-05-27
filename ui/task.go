@@ -129,15 +129,15 @@ func ServeTaskEditForm(w http.ResponseWriter, r *http.Request) {
 
 // EditedTaskValues stores the edited values of a task.
 type EditedTaskValues struct {
-	Name   string `schema:"name"`
-	Source string `schema:"oj"`
-	ID     string `schema:"id"`
-	URL    string `schema:"url"`
+	ProblemName string `schema:"name"`
+	ProblemOJ   string `schema:"oj"`
+	ProblemID   string `schema:"id"`
+	ProblemURL  string `schema:"url"`
 }
 
-// HandleTaskEditForm restores the edited values of tasks
+// HandleTaskSave restores the edited values of tasks
 // to tasks database.
-func HandleTaskEditForm(w http.ResponseWriter, r *http.Request) {
+func HandleTaskSave(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if !bson.IsObjectIdHex(idStr) {
@@ -170,10 +170,10 @@ func HandleTaskEditForm(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	task.ProblemName = editValues.Name
-	task.ProblemID = editValues.ID
-	task.ProblemOJ = editValues.Source
-	task.ProblemURL = editValues.URL
+	task.ProblemName = editValues.ProblemName
+	task.ProblemID = editValues.ProblemID
+	task.ProblemOJ = editValues.ProblemOJ
+	task.ProblemURL = editValues.ProblemURL
 
 	err = task.Put()
 	if err != nil {
@@ -208,5 +208,5 @@ func init() {
 	Router.NewRoute().
 		Methods("POST").
 		Path("/tasks/edit/{id}").
-		HandlerFunc(HandleTaskEditForm)
+		HandlerFunc(HandleTaskSave)
 }
