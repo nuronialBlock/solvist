@@ -51,6 +51,11 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	task.ProblemURL = taskValues.ProblemURL
 
 	note := data.Note{}
+	note.ProblemOJ = taskValues.ProblemOJ
+	note.ProblemID = taskValues.ProblemID
+	note.ProblemName = taskValues.ProblemName
+	note.ProblemURL = taskValues.ProblemURL
+
 	err = note.Put()
 	if err != nil {
 		ServeInternalServerError(w, r)
