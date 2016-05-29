@@ -54,3 +54,11 @@ var TplNote = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "u
 
 // TplNoteView renders a note.
 var TplNoteView = template.Must(TplNote.Funcs(template.FuncMap{"Markdown": Markdown}).ParseFiles("ui/templates/notePageView.gohtml"))
+
+// TplNoteEditFormValues stores edited note values.
+type TplNoteEditFormValues struct {
+	Note data.Note
+}
+
+// TplNoteEditForm render note edit form page.
+var TplNoteEditForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/noteEditFormPage.gohtml", "ui/templates/noteEditFormPageView.gohtml"))

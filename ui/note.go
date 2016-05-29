@@ -109,6 +109,35 @@ func ServeNote(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// ServeNoteEditForm serves the edit form page.
+func ServeNoteEditForm(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	note, err := data.GetNote(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if note == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = TplNoteEditForm.Execute(w, TplNoteEditFormValues{
+		Note: *note,
+	})
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+}
+
 // Markdown parse a Markdown to HTML.
 func Markdown(m string) template.HTML {
 	textBytes := bytes.NewBufferString(m).Bytes()
@@ -118,6 +147,10 @@ func Markdown(m string) template.HTML {
 }
 
 func init() {
+	Router.NewRoute().
+		Methods("Get").
+		Path("/notes/edit/{id}").
+		HandlerFunc(ServeNoteEditForm)
 	Router.NewRoute().
 		Methods("Get").
 		Path("/notes/new").
