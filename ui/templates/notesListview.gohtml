@@ -17,6 +17,10 @@
                 <form style="float:left; padding:5px" action="notes/{{.ID.Hex}}">
                     <button type="submit" class="btn btn-info">View</button>
                 </form>
+
+                <form style="float:left; padding:5px" action="notes/edit/{{.ID.Hex}}">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
             </div>
         </tr>
     </li>
