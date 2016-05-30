@@ -86,7 +86,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// HandleTaskRemove handler removes a task from the task list.
+// HandleTaskRemove removes a task from the task list.
 func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	idStr := vars["id"]
@@ -106,9 +106,27 @@ func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	note, err := data.GetNote(task.NoteID)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if note == nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if note.ModifiedAt == note.CreatedAt {
+		note.Remove()
+		if err != nil {
+			ServeInternalServerError(w, r)
+			return
+		}
+	}
+
 	err = task.Remove()
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
