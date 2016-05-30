@@ -138,6 +138,66 @@ func ServeNoteEditForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// EditedNoteValues stores edited values of a note.
+type EditedNoteValues struct {
+	ProblemName string `schema:"name"`
+	ProblemOJ   string `schema:"oj"`
+	ProblemID   string `schema:"id"`
+	ProblemURL  string `schema:"url"`
+	TopicName   string `schema:"topic"`
+	Catagory    string `schema:"catagory"`
+	Text        string `schema:"text"`
+}
+
+// HandleNoteSave saves the edited info of a note.
+func HandleNoteSave(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+	id := bson.ObjectIdHex(idStr)
+	note, err := data.GetNote(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if note == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = r.ParseForm()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	formValues := EditedNoteValues{}
+	decoder := schema.NewDecoder()
+	err = decoder.Decode(&formValues, r.PostForm)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	note.ProblemName = formValues.ProblemName
+	note.ProblemOJ = formValues.ProblemOJ
+	note.ProblemID = formValues.ProblemID
+	note.ProblemURL = formValues.ProblemURL
+	note.TopicName = formValues.TopicName
+	note.Catagory = formValues.Catagory
+	note.Text = formValues.Text
+
+	err = note.Put()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	http.Redirect(w, r, "/notes", http.StatusSeeOther)
+}
+
 // Markdown parse a Markdown to HTML.
 func Markdown(m string) template.HTML {
 	textBytes := bytes.NewBufferString(m).Bytes()
@@ -151,6 +211,10 @@ func init() {
 		Methods("Get").
 		Path("/notes/edit/{id}").
 		HandlerFunc(ServeNoteEditForm)
+	Router.NewRoute().
+		Methods("Post").
+		Path("/notes/edit/{id}").
+		HandlerFunc(HandleNoteSave)
 	Router.NewRoute().
 		Methods("Get").
 		Path("/notes/new").
