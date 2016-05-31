@@ -198,6 +198,35 @@ func HandleNoteSave(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/notes", http.StatusSeeOther)
 }
 
+// HandleNoteRemove removes a note from database.
+func HandleNoteRemove(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	idStr := vars["id"]
+	if !bson.IsObjectIdHex(idStr) {
+		ServeNotFound(w, r)
+		return
+	}
+
+	id := bson.ObjectIdHex(idStr)
+	note, err := data.GetNote(id)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	if note == nil {
+		ServeNotFound(w, r)
+		return
+	}
+
+	err = note.Remove()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	http.Redirect(w, r, "/notes", http.StatusSeeOther)
+}
+
 // Markdown parse a Markdown to HTML.
 func Markdown(m string) template.HTML {
 	textBytes := bytes.NewBufferString(m).Bytes()
@@ -231,4 +260,8 @@ func init() {
 		Methods("Get").
 		Path("/notes/{id}").
 		HandlerFunc(ServeNote)
+	Router.NewRoute().
+		Methods("Post").
+		Path("/notes/remove/{id}").
+		HandlerFunc(HandleNoteRemove)
 }
