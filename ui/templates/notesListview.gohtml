@@ -21,6 +21,9 @@
                 <form style="float:left; padding:5px" action="notes/edit/{{.ID.Hex}}">
                     <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
+                <form style="float:left; padding:5px" action="notes/remove/{{.ID.Hex}}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </div>
         </tr>
     </li>
