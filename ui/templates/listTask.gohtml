@@ -1,38 +1,40 @@
 {{/*Copyright 2016 The Solvist Author(s). All rights reserved. */}}
 
 {{define "listTask"}}
-    <tr>
-        <td>
-            <b>problem Name:</b> {{.ProblemName}}
-        </td>
-        <hr>
-        <td>
-            <b>problem Source:</b> {{.ProblemOJ}}
-        </td>
-        <hr>
-        <td>
-            <b>problem ID:</b> {{.ProblemID}}
-        </td>
-        <hr>
-        <td>
-        <div class="btn-group">
-            <form style="float: left; margin: 5px" action={{.ProblemURL}} method="get">
-                <button type="submit" class="btn btn-default">Problem Link</button>
-            </form>
-            <form  style="float: left; margin: 5px" action="/tasks/edit/{{.ID.Hex}}" method="get">
-                <button type="submit" class="btn btn-primary">Edit</button>
-            </form>
-            <form  style="float: left; margin: 5px" action="/tasks/remove/{{.ID.Hex}}" method="post">
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
+    <li class="list-group-item">
+        <tr>
+            <td>
+                <b>problem Name:</b> {{.ProblemName}}
+            </td>
+            <hr>
+            <td>
+                <b>problem Source:</b> {{.ProblemOJ}}
+            </td>
+            <hr>
+            <td>
+                <b>problem ID:</b> {{.ProblemID}}
+            </td>
+            <hr>
+            <td>
+            <div class="btn-group">
+                <form style="float: left; margin: 5px" action={{.ProblemURL}} method="get">
+                    <button type="submit" class="btn btn-default">Problem Link</button>
+                </form>
+                <form  style="float: left; margin: 5px" action="/tasks/edit/{{.ID.Hex}}" method="get">
+                    <button type="submit" class="btn btn-primary">Edit</button>
+                </form>
+                <form  style="float: left; margin: 5px" action="/tasks/remove/{{.ID.Hex}}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
 
-            <form  style="float:left; margin: 5px" action="/notes/{{.NoteID.Hex}}" method="get">
-                <button type="submit" class="btn btn-primary pull-right">View Note</button>
-            </form>
-            <form  style="float: left; margin: 5px" action="/notes/edit/{{.NoteID.Hex}}">
-                <button type="submit" class="btn btn-primary pull-right">Take Note</button>
-            </form>
-        </div>
-        </td>
-    </tr>
+                <form  style="float:left; margin: 5px" action="/notes/{{.NoteID.Hex}}" method="get">
+                    <button type="submit" class="btn btn-primary pull-right">View Note</button>
+                </form>
+                <form  style="float: left; margin: 5px" action="/notes/edit/{{.NoteID.Hex}}">
+                    <button type="submit" class="btn btn-primary pull-right">Take Note</button>
+                </form>
+            </div>
+            </td>
+        </tr>
+    </li>
 {{end}}

@@ -1,25 +1,19 @@
 {{/*Copyright 2016 The Solvist Author(s). All rights reserved. */}}
 
 {{define "listTasks"}}
-    <ul class="list-group">
-        <div class="container">
-            <form action="/tasks/new" method="get">
-                <button type="submit" class="btn btn-primary">New Task</button>
-            </form>
-        </div>
-        <hr>
-
-        {{range .}}
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-10">
-                        <li class="list-group-item">
-                            {{template "listTask" .}}
-                        </li>
-                    </div>
-                </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <form action="/tasks/new" method="get">
+                    <button type="submit" class="btn btn-primary">New Task</button>
+                </form>
+                <hr>
+                {{range .}}
+                    <ul class="list-group">
+                        {{template "listTask" .}}
+                    </ul>
+                {{end}}
             </div>
-            <hr>
-        {{end}}
-    </ul>
+        </div>
+    </div>
 {{end}}
