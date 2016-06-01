@@ -28,6 +28,10 @@
             <form  style="float: left; margin: 5px" action="/tasks/remove/{{.ID.Hex}}" method="post">
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
+
+            <form  style="float:left; margin: 5px" action="/notes/{{.NoteID.Hex}}" method="get">
+                <button type="submit" class="btn btn-primary">View Note</button>
+            </form>
         </div>
         </td>
     </tr>
