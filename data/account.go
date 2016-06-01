@@ -23,3 +23,15 @@ type Account struct {
 	CreatedAt  time.Time `bson:"created_at"`
 	ModifiedAt time.Time `bson:"modified_at"`
 }
+
+// ListAccounts function gives an array of all accounts,
+// and give an error if any occurs.
+func ListAccounts() ([]Account, error) {
+	accs := []Account{}
+	err := sess.DB("").C(accountC).Find(nil).All(&accs)
+	if err != nil {
+		return nil, err
+	}
+
+	return accs, nil
+}
