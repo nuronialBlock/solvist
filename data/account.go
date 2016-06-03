@@ -24,6 +24,17 @@ type Account struct {
 	ModifiedAt time.Time `bson:"modified_at"`
 }
 
+// GetAccount retrives an account by it's ID.
+func GetAccount(id bson.ObjectId) (Account, error) {
+	acc := Account{}
+	err := sess.DB("").C(accountC).FindId(id).One(&acc)
+	if err != nil {
+		return acc, err
+	}
+
+	return acc, nil
+}
+
 // ListAccounts function gives an array of all accounts,
 // and give an error if any occurs.
 func ListAccounts() ([]Account, error) {
