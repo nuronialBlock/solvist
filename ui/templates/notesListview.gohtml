@@ -9,22 +9,17 @@
                 <b>Problem OJ: </b> {{.ProblemOJ}}
             </td>
             <hr>
-            <div class="btn-group" role="group">
-                <form style="float:left; padding:5px" action="{{.ProblemURL}}">
-                    <button type="submit" class="btn btn-default">Problem</button>
-                </form>
-
-                <form style="float:left; padding:5px" action="notes/{{.ID.Hex}}">
-                    <button type="submit" class="btn btn-info">View</button>
-                </form>
-
-                <form style="float:left; padding:5px" action="notes/edit/{{.ID.Hex}}">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                <form style="float:left; padding:5px" action="notes/remove/{{.ID.Hex}}" method="post">
+            <td>
+                <a href="{{.ProblemURL}}" class="btn btn-info" role="button">Problem Link</a>
+                <a href="notes/{{.ID.Hex}}" class="btn btn-primary" role="button">View</a>
+                <a href="notes/edit/{{.ID.Hex}}" class="btn btn-primary" role="button">Edit</a>
+            </td>
+            <hr>
+            <td>
+                <form action="notes/remove/{{.ID.Hex}}" method="post">
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
-            </div>
+            </td>
         </tr>
     </li>
 {{end}}

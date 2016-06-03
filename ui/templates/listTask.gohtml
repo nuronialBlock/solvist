@@ -12,28 +12,16 @@
             </td>
             <hr>
             <td>
-                <b>problem ID:</b> {{.ProblemID}}
+                <a  href={{.ProblemURL}} role="button" class="btn btn-info">Problem Link</a>
+                <a  href="/tasks/edit/{{.ID.Hex}}" role="button" class="btn btn-primary">Edit</a>
+                <a  href="/notes/{{.NoteID.Hex}}" role="button" class="btn btn-primary">View Note</a>
+                <a  href="/notes/edit/{{.NoteID.Hex}}" role="button" class="btn btn-primary">Take Note</a>
             </td>
             <hr>
             <td>
-            <div class="btn-group">
-                <form style="float: left; margin: 5px" action={{.ProblemURL}} method="get">
-                    <button type="submit" class="btn btn-default">Problem Link</button>
+                <form action="/tasks/remove/{{.ID.Hex}}" method="post">
+                    <button type="submit" class="btn btn-danger">Delete Task</button>
                 </form>
-                <form  style="float: left; margin: 5px" action="/tasks/edit/{{.ID.Hex}}" method="get">
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
-                <form  style="float: left; margin: 5px" action="/tasks/remove/{{.ID.Hex}}" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-
-                <form  style="float:left; margin: 5px" action="/notes/{{.NoteID.Hex}}" method="get">
-                    <button type="submit" class="btn btn-primary pull-right">View Note</button>
-                </form>
-                <form  style="float: left; margin: 5px" action="/notes/edit/{{.NoteID.Hex}}">
-                    <button type="submit" class="btn btn-primary pull-right">Take Note</button>
-                </form>
-            </div>
             </td>
         </tr>
     </li>
