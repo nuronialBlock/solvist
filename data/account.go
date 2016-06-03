@@ -35,3 +35,13 @@ func ListAccounts() ([]Account, error) {
 
 	return accs, nil
 }
+
+// Remove removes an account form database.
+func (a *Account) Remove() error {
+	err := sess.DB("").C(accountC).RemoveId(a.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
