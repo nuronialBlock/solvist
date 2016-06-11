@@ -78,7 +78,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		ServeInternalServerError(w, r)
 	}
-	err = TplListTasks.Execute(w, TplListTasksValues{
+	err = TplTasksList.Execute(w, TplTasksListValues{
 		Tasks: tasks,
 	})
 	if err != nil {
