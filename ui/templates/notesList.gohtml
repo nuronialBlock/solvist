@@ -7,11 +7,9 @@
                 </form>
                 <hr>
                 {{range .}}
-                    {{if .Text}}
                         <ul class="list-group">
                             {{template "notesListview" .}}
                         </ul>
-                    {{end}}
                 {{end}}
             </div>
         </div>
