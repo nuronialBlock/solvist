@@ -62,3 +62,16 @@ type TplNoteEditFormValues struct {
 
 // TplNoteEditForm render note edit form page.
 var TplNoteEditForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/noteEditFormPage.gohtml", "ui/templates/noteEditForm.gohtml"))
+
+// TplLogInValues stores template log in values.
+type TplLogInValues struct {
+	Common TplCommonValues
+}
+
+// TplLogIn renders log in page.
+var TplLogIn = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/loginPage.gohtml", "ui/templates/login.gohtml"))
+
+// TplCommonValues stores common values for templates.
+type TplCommonValues struct {
+	Account data.Account
+}
