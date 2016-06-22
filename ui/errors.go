@@ -14,3 +14,8 @@ func ServeInternalServerError(w http.ResponseWriter, r *http.Request) {
 func ServeNotFound(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Not Found", http.StatusNotFound)
 }
+
+// ServeBadRequest writes serve bad request by r.
+func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Not Found", http.StatusNotFound)
+}

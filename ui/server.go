@@ -5,9 +5,13 @@ package ui
 import (
 	"net/http"
 
+	"labix.org/v2/mgo/bson"
+
+	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
+	"github.com/nuronialBlock/solvist/solvist/data"
 )
 
 const (
@@ -29,7 +33,23 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	sess, err := store.Get(r, "very-secret")
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
+
+	accID, ok := sess.Values["accountID"].(string)
+	if ok {
+		if !bson.IsObjectIdHex(accID) {
+			ServeBadRequest(w, r)
+			return
+		}
+		acc, err := data.GetAccount(bson.ObjectIdHex(accID))
+		if err != nil {
+			ServeInternalServerError(w, r)
+			return
+		}
+		context.Set(r, "account", acc)
+	}
+
 	s.router.ServeHTTP(w, r)
 }
 
