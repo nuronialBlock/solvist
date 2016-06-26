@@ -17,7 +17,7 @@ func serveLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 	err := TplLogIn.Execute(w, TplLogInValues{
 		Common: TplCommonValues{
-			Account: *acc,
+			Account: acc,
 		},
 	})
 	if err != nil {

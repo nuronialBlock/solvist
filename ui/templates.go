@@ -73,5 +73,5 @@ var TplLogIn = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "
 
 // TplCommonValues stores common values for templates.
 type TplCommonValues struct {
-	Account data.Account
+	Account *data.Account
 }
