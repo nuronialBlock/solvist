@@ -33,3 +33,8 @@ func NewAccountPassword(clear string) (AccountPassword, error) {
 	accPass.DerivedKey = pbkdf2.Key(clear, accPass.Salt, accPass.Iteration, accPass.KeyLength, sha1.New)
 	return accPass, nil
 }
+
+// IsValid checks whether a key's validity.
+func (p AccountPassword) IsValid() bool {
+	return len(p.DerivedKey) != 0
+}
