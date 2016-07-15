@@ -3,6 +3,7 @@
 package data
 
 import (
+	"bytes"
 	"crypto/rand"
 	"crypto/sha1"
 
@@ -37,4 +38,10 @@ func NewAccountPassword(clear string) (AccountPassword, error) {
 // IsValid checks whether a key's validity.
 func (p AccountPassword) IsValid() bool {
 	return len(p.DerivedKey) != 0
+}
+
+// Match checks if the password matches or not.
+func (p AccountPassword) Match(clear string) bool {
+	key := pbkdf2.Key(clear, p.Salt, p.Iteration, p.KeyLength, sha1.New)
+	return bytes.Equal(key, p.DerivedKey)
 }
