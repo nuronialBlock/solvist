@@ -2,7 +2,11 @@
 
 package data
 
-import "time"
+import (
+	"time"
+
+	"github.com/asaskevich/govalidator"
+)
 
 // AccountEmail stores the informations of user Email.
 type AccountEmail struct {
@@ -14,4 +18,17 @@ type AccountEmail struct {
 	Verified   bool      `bson:"verified"`
 	VerifiedAt time.Time `bson:"verified_at"`
 	Token      string    `bson:"token"`
+}
+
+// NewAccountEmail returns a new AccountEmail,
+// if address doesn't contain any error.
+func NewAccountEmail(addr string) (AccountEmail, error) {
+	acc := AccountEmail{}
+	acc.Address = addr
+	acc.AddressNorm, err = govalidator.NormalizeEmail(addr)
+	if err != nil {
+		return nil, err
+	}
+
+	return acc, nil
 }
