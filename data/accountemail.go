@@ -23,12 +23,13 @@ type AccountEmail struct {
 // NewAccountEmail returns a new AccountEmail,
 // if address doesn't contain any error.
 func NewAccountEmail(addr string) (AccountEmail, error) {
-	acc := AccountEmail{}
-	acc.Address = addr
-	acc.AddressNorm, err = govalidator.NormalizeEmail(addr)
+	norm, err := govalidator.NormalizeEmail(addr)
 	if err != nil {
-		return nil, err
+		return AccountEmail{}, err
 	}
 
-	return acc, nil
+	return AccountEmail{
+		Address:     addr,
+		AddressNorm: norm,
+	}, nil
 }

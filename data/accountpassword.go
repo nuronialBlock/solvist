@@ -31,7 +31,7 @@ func NewAccountPassword(clear string) (AccountPassword, error) {
 	accPass.Algorithm = "SHA1"
 	accPass.Iteration = 4096
 	accPass.KeyLength = 32
-	accPass.DerivedKey = pbkdf2.Key(clear, accPass.Salt, accPass.Iteration, accPass.KeyLength, sha1.New)
+	accPass.DerivedKey = pbkdf2.Key([]byte(clear), accPass.Salt, accPass.Iteration, accPass.KeyLength, sha1.New)
 	return accPass, nil
 }
 
@@ -42,6 +42,6 @@ func (p AccountPassword) IsValid() bool {
 
 // Match checks if the password matches or not.
 func (p AccountPassword) Match(clear string) bool {
-	key := pbkdf2.Key(clear, p.Salt, p.Iteration, p.KeyLength, sha1.New)
+	key := pbkdf2.Key([]byte(clear), p.Salt, p.Iteration, p.KeyLength, sha1.New)
 	return bytes.Equal(key, p.DerivedKey)
 }
