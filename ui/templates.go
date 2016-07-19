@@ -75,3 +75,11 @@ var TplLogIn = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "
 type TplCommonValues struct {
 	Account *data.Account
 }
+
+// TplRegisterValues stores values while rendering register form.
+type TplRegisterValues struct {
+	CommonValues TplCommonValues
+}
+
+// TplRegister renders the register form.
+var TplRegister = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/registerPage.gohtml", "ui/templates/register.gohtml"))
