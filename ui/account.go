@@ -3,6 +3,7 @@
 package ui
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gorilla/context"
@@ -30,7 +31,7 @@ func ServeLogIn(w http.ResponseWriter, r *http.Request) {
 // ServeRegister serves the register page.
 func ServeRegister(w http.ResponseWriter, r *http.Request) {
 	acc, ok := context.Get(r, "account").(*data.Account)
-	if !ok {
+	if ok {
 		ServeBadRequest(w, r)
 		return
 	}
@@ -39,6 +40,7 @@ func ServeRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("Oka")
 	err := TplRegister.Execute(w, TplRegisterValues{
 		CommonValues: TplCommonValues{
 			Account: acc,
