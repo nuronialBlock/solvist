@@ -12,9 +12,11 @@ import (
 
 // Account stores the informations of an user.
 type Account struct {
-	ID     bson.ObjectId `bson:"_id"`
-	Name   string        `bson:"name"`
-	Handle string        `bson:"handle"`
+	ID         bson.ObjectId `bson:"_id"`
+	Name       string        `bson:"name"`
+	Handle     string        `bson:"handle"`
+	University string        `bson:"university"`
+	Country    string        `bson:"country"`
 
 	Password AccountPassword `bson:"password"`
 	Emails   []AccountEmail  `bson:"emails"`
