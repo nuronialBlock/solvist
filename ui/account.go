@@ -3,7 +3,6 @@
 package ui
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/context"
@@ -40,9 +39,8 @@ func ServeRegister(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("Oka")
 	err := TplRegister.Execute(w, TplRegisterValues{
-		CommonValues: TplCommonValues{
+		Common: TplCommonValues{
 			Account: acc,
 		},
 	})

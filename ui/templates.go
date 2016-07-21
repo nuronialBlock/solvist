@@ -78,7 +78,7 @@ type TplCommonValues struct {
 
 // TplRegisterValues stores values while rendering register form.
 type TplRegisterValues struct {
-	CommonValues TplCommonValues
+	Common TplCommonValues
 }
 
 // TplRegister renders the register form.
