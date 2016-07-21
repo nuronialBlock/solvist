@@ -17,5 +17,5 @@ func ServeNotFound(w http.ResponseWriter, r *http.Request) {
 
 // ServeBadRequest writes serve bad request by r.
 func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, "Not Found", http.StatusNotFound)
+	http.Error(w, "Bad Request", http.StatusNotFound)
 }
