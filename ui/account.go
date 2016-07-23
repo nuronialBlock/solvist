@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/context"
+	"github.com/gorilla/schema"
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
 
@@ -50,11 +51,54 @@ func ServeRegisterForm(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// LoginFormValues stroes form values while logging in.
+type LoginFormValues struct {
+	Handle   string `schema:"handle"`
+	Password string `schema:"pass"`
+}
+
+// HandleLogin handles login of a user.
+func HandleLogin(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if ok {
+		ServeBadRequest(w, r)
+		return
+	}
+	if acc != nil {
+		ServeBadRequest(w, r)
+		return
+	}
+
+	values := LoginFormValues{}
+	decoder := schema.NewDecoder()
+	err := decoder.Decode(values, r.PostForm)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	acc, err := data.GetAccountByHandle(values.Handle)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	m := acc.Password.Match(values.Password)
+	if !m {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("Get").
 		Path("/login").
 		HandlerFunc(ServeLogInForm)
+	Router.NewRoute().
+		Methods("Post").
+		Path("/login").
+		HandlerFunc(HandleLogin)
 	Router.NewRoute().
 		Methods("Get").
 		Path("/register").
