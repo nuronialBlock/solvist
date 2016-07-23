@@ -9,8 +9,8 @@ import (
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
 
-// ServeLogIn serves login page.
-func ServeLogIn(w http.ResponseWriter, r *http.Request) {
+// ServeLogInForm serves login page.
+func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
 	acc, ok := context.Get(r, "account").(*data.Account)
 	if ok {
 		ServeBadRequest(w, r)
@@ -27,8 +27,8 @@ func ServeLogIn(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// ServeRegister serves the register page.
-func ServeRegister(w http.ResponseWriter, r *http.Request) {
+// ServeRegisterForm serves the register page.
+func ServeRegisterForm(w http.ResponseWriter, r *http.Request) {
 	acc, ok := context.Get(r, "account").(*data.Account)
 	if ok {
 		ServeBadRequest(w, r)
@@ -54,9 +54,9 @@ func init() {
 	Router.NewRoute().
 		Methods("Get").
 		Path("/login").
-		HandlerFunc(ServeLogIn)
+		HandlerFunc(ServeLogInForm)
 	Router.NewRoute().
 		Methods("Get").
 		Path("/register").
-		HandlerFunc(ServeRegister)
+		HandlerFunc(ServeRegisterForm)
 }
