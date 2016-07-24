@@ -109,6 +109,70 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
+// RegisterFormValues stores values while registering a user.
+type RegisterFormValues struct {
+	Name       string `schema:"name"`
+	Handle     string `schema:"handle"`
+	Email      string `schema:"email"`
+	Password   string `schema:"password"`
+	University string `schema:"university"`
+	Country    string `schema:"country"`
+}
+
+// HandleRegister registers a user.
+func HandleRegister(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if ok {
+		ServeBadRequest(w, r)
+		return
+	}
+	if acc != nil {
+		ServeBadRequest(w, r)
+		return
+	}
+
+	err := r.ParseForm()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	body := RegisterFormValues{}
+	decoder := schema.NewDecoder()
+	err = decoder.Decode(&body, r.PostForm)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	acc1 := data.Account{}
+	acc1.Name = body.Name
+	acc1.Handle = body.Handle
+	acc1.University = body.University
+	acc1.Country = body.Country
+
+	ae, err := data.NewAccountEmail(body.Email)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	acc1.Emails = append(acc1.Emails, ae)
+
+	ap, err := data.NewAccountPassword(body.Password)
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	acc1.Password = ap
+
+	err = acc1.Put()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("Get").
@@ -122,4 +186,8 @@ func init() {
 		Methods("Get").
 		Path("/register").
 		HandlerFunc(ServeRegisterForm)
+	Router.NewRoute().
+		Methods("Post").
+		Path("/register").
+		HandlerFunc(HandleRegister)
 }
