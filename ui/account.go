@@ -5,6 +5,8 @@ package ui
 import (
 	"net/http"
 
+	"labix.org/v2/mgo"
+
 	"github.com/gorilla/context"
 	"github.com/gorilla/schema"
 	"github.com/nuronialBlock/solvist/solvist/data"
@@ -71,13 +73,17 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 
 	values := LoginFormValues{}
 	decoder := schema.NewDecoder()
-	err := decoder.Decode(values, r.PostForm)
+	err := decoder.Decode(&values, r.PostForm)
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
 	}
 
-	acc, err := data.GetAccountByHandle(values.Handle)
+	acc, err = data.GetAccountByHandle(values.Handle)
+	if err == mgo.ErrNotFound {
+		ServeHandleIncorrect(w, r)
+		return
+	}
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return

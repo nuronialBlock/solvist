@@ -19,3 +19,8 @@ func ServeNotFound(w http.ResponseWriter, r *http.Request) {
 func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Bad Request", http.StatusNotFound)
 }
+
+// ServeHandleIncorrect writes serve bad request by r.
+func ServeHandleIncorrect(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Handle Incorrect", http.StatusNotFound)
+}
