@@ -71,9 +71,14 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err := r.ParseForm()
+	if err != nil {
+		ServeHandleIncorrect(w, r)
+		return
+	}
 	values := LoginFormValues{}
 	decoder := schema.NewDecoder()
-	err := decoder.Decode(&values, r.PostForm)
+	err = decoder.Decode(&values, r.PostForm)
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
@@ -93,6 +98,14 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
+
+	sess, err := store.Get(r, "very-secret")
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	sess.Values["accountID"] = acc.ID.Hex()
+	sess.Save(r, w)
 	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
 
