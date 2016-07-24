@@ -37,6 +37,18 @@ func GetAccount(id bson.ObjectId) (Account, error) {
 	return acc, nil
 }
 
+// GetAccountByHandle funtion takes handle as input, and
+// returns Account information,
+// returns error if error occured.
+func GetAccountByHandle(handle string) (*Account, error) {
+	acc := Account{}
+	err := sess.DB("").C(accountC).Find(bson.M{"handle": handle}).One(&acc)
+	if err != nil {
+		return nil, err
+	}
+	return &acc, nil
+}
+
 // ListAccounts function gives an array of all accounts,
 // and give an error if any occurs.
 func ListAccounts() ([]Account, error) {
