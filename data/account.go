@@ -61,6 +61,17 @@ func ListAccounts() ([]Account, error) {
 	return accs, nil
 }
 
+// Put puts data in the database.
+func (a *Account) Put() error {
+	a.ModifiedAt = time.Now()
+	if a.ID == "" {
+		a.CreatedAt = a.ModifiedAt
+		a.ID = bson.NewObjectId()
+	}
+	_, err := sess.DB("").C(accountC).UpsertId(a.ID, a)
+	return err
+}
+
 // Remove removes an account form database.
 func (a *Account) Remove() error {
 	err := sess.DB("").C(accountC).RemoveId(a.ID)
