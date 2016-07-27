@@ -7,6 +7,7 @@ import (
 
 	"labix.org/v2/mgo/bson"
 
+	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
 	"github.com/nuronialBlock/solvist/solvist/data"
@@ -74,15 +75,25 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 
 // ServeTasksList serves the list of the tasks.
 func ServeTasksList(w http.ResponseWriter, r *http.Request) {
-	tasks, err := data.ListTasks()
+	acc, ok := context.Get(r, "account").(data.Account)
+	if !ok || &acc == nil {
+		ServeBadRequest(w, r)
+		return
+	}
+	tasks, err := data.ListTasksByID(acc.ID)
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 	err = TplTasksList.Execute(w, TplTasksListValues{
+		Common: TplCommonValues{
+			Account: &acc,
+		},
 		Tasks: tasks,
 	})
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 }
 

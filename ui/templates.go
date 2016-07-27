@@ -16,7 +16,8 @@ var TplTaskNewForm = template.Must(template.ParseFiles("ui/templates/layout.goht
 
 // TplTasksListValues stores the values of tasks.
 type TplTasksListValues struct {
-	Tasks []data.Task
+	Common TplCommonValues
+	Tasks  []data.Task
 }
 
 // TplTasksList renders Tasks.
