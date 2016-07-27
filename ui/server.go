@@ -9,7 +9,6 @@ import (
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"github.com/nuronialBlock/solvist/solvist/data"
 )
@@ -21,7 +20,7 @@ const (
 // Router registers routes to be matched and dispatches a handler.
 var Router = mux.NewRouter()
 
-var store = sessions.NewCookieStore(securecookie.GenerateRandomKey(cookieLength))
+var store = sessions.NewCookieStore([]byte("something-very-secret"))
 
 // Server stores router.
 type Server struct {
@@ -30,7 +29,7 @@ type Server struct {
 
 // ServeHTTP calls the HandlerFunc based on request r.
 func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	sess, err := store.Get(r, "very-secret")
+	sess, err := store.Get(r, "s")
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return

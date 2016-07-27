@@ -99,7 +99,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sess, err := store.Get(r, "very-secret")
+	sess, err := store.Get(r, "s")
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
