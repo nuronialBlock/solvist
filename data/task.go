@@ -46,6 +46,17 @@ func ListTasks() ([]Task, error) {
 	return tasks, nil
 }
 
+// ListTasksByID retrieves a list of tasks form database by user ID, if successful,
+// an array of Task object that can be used for showing tasks list.
+func ListTasksByID(id bson.ObjectId) ([]Task, error) {
+	tasks := []Task{}
+	err := sess.DB("").C(taskC).FindId(id).All(&tasks)
+	if err != nil {
+		return nil, err
+	}
+	return tasks, nil
+}
+
 // Put puts data into database.
 func (t *Task) Put() error {
 	t.ModifiedAt = time.Now()
