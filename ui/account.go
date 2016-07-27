@@ -14,14 +14,18 @@ import (
 
 // ServeLogInForm serves login page.
 func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(*data.Account)
-	if ok {
+	acc, ok := context.Get(r, "account").(data.Account)
+	if !ok {
+		ServeBadRequest(w, r)
+		return
+	}
+	if &acc != nil {
 		ServeBadRequest(w, r)
 		return
 	}
 	err := TplLogIn.Execute(w, TplLogInValues{
 		Common: TplCommonValues{
-			Account: acc,
+			Account: &acc,
 		},
 	})
 	if err != nil {
@@ -32,19 +36,19 @@ func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
 
 // ServeRegisterForm serves the register page.
 func ServeRegisterForm(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(*data.Account)
-	if ok {
+	acc, ok := context.Get(r, "account").(data.Account)
+	if !ok {
 		ServeBadRequest(w, r)
 		return
 	}
-	if acc != nil {
+	if &acc != nil {
 		ServeBadRequest(w, r)
 		return
 	}
 
 	err := TplRegister.Execute(w, TplRegisterValues{
 		Common: TplCommonValues{
-			Account: acc,
+			Account: &acc,
 		},
 	})
 	if err != nil {
@@ -61,16 +65,6 @@ type LoginFormValues struct {
 
 // HandleLogin handles login of a user.
 func HandleLogin(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(*data.Account)
-	if ok {
-		ServeBadRequest(w, r)
-		return
-	}
-	if acc != nil {
-		ServeBadRequest(w, r)
-		return
-	}
-
 	err := r.ParseForm()
 	if err != nil {
 		ServeHandleIncorrect(w, r)
@@ -84,7 +78,7 @@ func HandleLogin(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	acc, err = data.GetAccountByHandle(values.Handle)
+	acc, err := data.GetAccountByHandle(values.Handle)
 	if err == mgo.ErrNotFound {
 		ServeHandleIncorrect(w, r)
 		return
@@ -121,16 +115,6 @@ type RegisterFormValues struct {
 
 // HandleRegister registers a user.
 func HandleRegister(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(*data.Account)
-	if ok {
-		ServeBadRequest(w, r)
-		return
-	}
-	if acc != nil {
-		ServeBadRequest(w, r)
-		return
-	}
-
 	err := r.ParseForm()
 	if err != nil {
 		ServeInternalServerError(w, r)
