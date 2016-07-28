@@ -15,14 +15,11 @@ import (
 // ServeLogInForm serves login page.
 func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
 	acc, ok := context.Get(r, "account").(data.Account)
-	if !ok {
+	if ok {
 		ServeBadRequest(w, r)
 		return
 	}
-	if &acc != nil {
-		ServeBadRequest(w, r)
-		return
-	}
+
 	err := TplLogIn.Execute(w, TplLogInValues{
 		Common: TplCommonValues{
 			Account: &acc,
@@ -157,6 +154,18 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
 
+// HandleLogout handles logout request.
+func HandleLogout(w http.ResponseWriter, r *http.Request) {
+	sess, err := store.Get(r, "s")
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+	delete(sess.Values, "accountID")
+	sess.Save(r, w)
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
 func init() {
 	Router.NewRoute().
 		Methods("Get").
@@ -174,4 +183,8 @@ func init() {
 		Methods("Post").
 		Path("/register").
 		HandlerFunc(HandleRegister)
+	Router.NewRoute().
+		Methods("Post").
+		Path("/logout").
+		HandlerFunc(HandleLogout)
 }
