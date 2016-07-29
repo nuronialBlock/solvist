@@ -14,15 +14,15 @@ import (
 
 // ServeLogInForm serves login page.
 func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(data.Account)
+	acc, ok := context.Get(r, "account").(*data.Account)
 	if ok {
-		ServeBadRequest(w, r)
+		http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 		return
 	}
 
 	err := TplLogIn.Execute(w, TplLogInValues{
 		Common: TplCommonValues{
-			Account: &acc,
+			Account: acc,
 		},
 	})
 	if err != nil {
@@ -33,19 +33,15 @@ func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
 
 // ServeRegisterForm serves the register page.
 func ServeRegisterForm(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(data.Account)
-	if !ok {
-		ServeBadRequest(w, r)
-		return
-	}
-	if &acc != nil {
-		ServeBadRequest(w, r)
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if ok {
+		http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 		return
 	}
 
 	err := TplRegister.Execute(w, TplRegisterValues{
 		Common: TplCommonValues{
-			Account: &acc,
+			Account: acc,
 		},
 	})
 	if err != nil {
