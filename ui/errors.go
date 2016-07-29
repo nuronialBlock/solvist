@@ -5,22 +5,22 @@ package ui
 
 import "net/http"
 
-// ServeInternalServerError writes Internal server error requested by r.
+// ServeInternalServerError writes internal server error requested by r.
 func ServeInternalServerError(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 }
 
-// ServeNotFound writes Not Found error requested by r.
+// ServeNotFound writes not found error requested by r.
 func ServeNotFound(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Not Found", http.StatusNotFound)
 }
 
-// ServeBadRequest writes serve bad request by r.
+// ServeBadRequest writes bad request requestd by r.
 func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Bad Request", http.StatusBadRequest)
 }
 
-// ServeHandleIncorrect writes serve bad request by r.
+// ServeHandleIncorrect writes handle incorrect requested by r.
 func ServeHandleIncorrect(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Handle Incorrect", http.StatusNotFound)
 }
