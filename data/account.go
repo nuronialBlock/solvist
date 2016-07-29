@@ -27,14 +27,14 @@ type Account struct {
 }
 
 // GetAccount retrives an account by it's ID.
-func GetAccount(id bson.ObjectId) (Account, error) {
+func GetAccount(id bson.ObjectId) (*Account, error) {
 	acc := Account{}
 	err := sess.DB("").C(accountC).FindId(id).One(&acc)
 	if err != nil {
-		return acc, err
+		return nil, err
 	}
 
-	return acc, nil
+	return &acc, nil
 }
 
 // GetAccountByHandle funtion takes handle as input, and
