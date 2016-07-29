@@ -75,9 +75,9 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 
 // ServeTasksList serves the list of the tasks.
 func ServeTasksList(w http.ResponseWriter, r *http.Request) {
-	acc, ok := context.Get(r, "account").(data.Account)
-	if !ok || &acc == nil {
-		ServeBadRequest(w, r)
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 	tasks, err := data.ListTasksByID(acc.ID)
@@ -87,7 +87,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 	}
 	err = TplTasksList.Execute(w, TplTasksListValues{
 		Common: TplCommonValues{
-			Account: &acc,
+			Account: acc,
 		},
 		Tasks: tasks,
 	})
