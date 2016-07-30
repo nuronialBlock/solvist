@@ -15,7 +15,16 @@ import (
 
 // ServeTaskNewForm serves new task form requested by r.
 func ServeTaskNewForm(w http.ResponseWriter, r *http.Request) {
-	err := TplTaskNewForm.Execute(w, TplTaskNewFormValues{})
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+	err := TplTaskNewForm.Execute(w, TplTaskNewFormValues{
+		Common: TplCommonValues{
+			Account: acc,
+		},
+	})
 	if err != nil {
 		ServeInternalServerError(w, r)
 	}

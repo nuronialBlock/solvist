@@ -9,7 +9,9 @@ import (
 )
 
 // TplTaskNewFormValues passes the new form values.
-type TplTaskNewFormValues struct{}
+type TplTaskNewFormValues struct {
+	Common TplCommonValues
+}
 
 // TplTaskNewForm generates new form for user.
 var TplTaskNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/taskNewFormPage.gohtml", "ui/templates/taskNewForm.gohtml"))
