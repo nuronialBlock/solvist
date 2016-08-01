@@ -10,7 +10,8 @@ import (
 
 // Note stores note of a problem.
 type Note struct {
-	ID bson.ObjectId `bson:"_id"`
+	ID        bson.ObjectId `bson:"_id"`
+	AccountID bson.ObjectId `bson:"account_id"`
 
 	ProblemName string `bson:"problem_name"`
 	ProblemOJ   string `bson:"problem_oj"`

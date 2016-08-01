@@ -10,13 +10,14 @@ import (
 
 // Task stores the task informations of an user.
 type Task struct {
-	ID          bson.ObjectId `bson:"_id"`
-	ProblemName string        `bson:"problem_name"`
-	ProblemOJ   string        `bson:"problem_oj"`
-	ProblemID   string        `bson:"problem_id"`
-	ProblemURL  string        `bson:"problem_url"`
+	ID        bson.ObjectId `bson:"_id"`
+	AccountID bson.ObjectId `bson:"account_id"`
+	NoteID    bson.ObjectId `bson:"note_id"`
 
-	NoteID bson.ObjectId `bson:"note_id"`
+	ProblemName string `bson:"problem_name"`
+	ProblemOJ   string `bson:"problem_oj"`
+	ProblemID   string `bson:"problem_id"`
+	ProblemURL  string `bson:"problem_url"`
 
 	ModifiedAt time.Time `bson:"modified_at"`
 	CreatedAt  time.Time `bson:"created_at"`
