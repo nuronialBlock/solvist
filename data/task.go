@@ -47,11 +47,11 @@ func ListTasks() ([]Task, error) {
 	return tasks, nil
 }
 
-// ListTasksByID retrieves a list of tasks form database by user ID, if successful,
+// ListTasksByAccountID retrieves a list of tasks form database by user ID, if successful,
 // an array of Task object that can be used for showing tasks list.
-func ListTasksByID(id bson.ObjectId) ([]Task, error) {
+func ListTasksByAccountID(id bson.ObjectId) ([]Task, error) {
 	tasks := []Task{}
-	err := sess.DB("").C(taskC).FindId(id).All(&tasks)
+	err := sess.DB("").C(taskC).Find(bson.M{"account_id": id}).All(&tasks)
 	if err != nil {
 		return nil, err
 	}

@@ -89,7 +89,7 @@ func ServeTasksList(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
-	tasks, err := data.ListTasksByID(acc.ID)
+	tasks, err := data.ListTasksByAccountID(acc.ID)
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
