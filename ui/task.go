@@ -42,7 +42,7 @@ type TaskValues struct {
 func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	acc, ok := context.Get(r, "account").(*data.Account)
 	if !ok {
-		http.Redirect(w, r, "/login", http.StatusFound)
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
 		return
 	}
 
@@ -134,6 +134,16 @@ func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if acc.ID != task.AccountID {
+		ServeBadRequest(w, r)
+		return
+	}
+
 	note, err := data.GetNote(task.NoteID)
 	if err != nil {
 		ServeInternalServerError(w, r)
@@ -177,6 +187,15 @@ func ServeTaskEditForm(w http.ResponseWriter, r *http.Request) {
 	}
 	if task == nil {
 		ServeNotFound(w, r)
+		return
+	}
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if acc.ID != task.AccountID {
+		ServeBadRequest(w, r)
 		return
 	}
 
