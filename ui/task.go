@@ -40,6 +40,12 @@ type TaskValues struct {
 
 // HandleTaskCreate handles new task to create from the form submission.
 func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
 	err := r.ParseForm()
 	if err != nil {
 		ServeInternalServerError(w, r)
@@ -59,12 +65,14 @@ func HandleTaskCreate(w http.ResponseWriter, r *http.Request) {
 	task.ProblemID = taskValues.ProblemID
 	task.ProblemName = taskValues.ProblemName
 	task.ProblemURL = taskValues.ProblemURL
+	task.AccountID = acc.ID
 
 	note := data.Note{}
 	note.ProblemOJ = taskValues.ProblemOJ
 	note.ProblemID = taskValues.ProblemID
 	note.ProblemName = taskValues.ProblemName
 	note.ProblemURL = taskValues.ProblemURL
+	note.AccountID = acc.ID
 
 	err = note.Put()
 	if err != nil {
