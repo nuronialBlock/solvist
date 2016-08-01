@@ -243,6 +243,16 @@ func HandleTaskSave(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	if acc.ID != task.AccountID {
+		ServeBadRequest(w, r)
+		return
+	}
+
 	editValues := EditedTaskValues{}
 	decoder := schema.NewDecoder()
 	err = decoder.Decode(&editValues, r.PostForm)
