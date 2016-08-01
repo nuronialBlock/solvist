@@ -200,6 +200,9 @@ func ServeTaskEditForm(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = TplTaskEditForm.Execute(w, TplTaskEditFormValues{
+		Common: TplCommonValues{
+			Account: acc,
+		},
 		Task: *task,
 	})
 	if err != nil {

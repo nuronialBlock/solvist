@@ -27,7 +27,8 @@ var TplTasksList = template.Must(template.ParseFiles("ui/templates/layout.gohtml
 
 // TplTaskEditFormValues stores the values of the edited task.
 type TplTaskEditFormValues struct {
-	Task data.Task
+	Common TplCommonValues
+	Task   data.Task
 }
 
 // TplTaskEditForm renders task edit.
