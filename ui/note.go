@@ -265,6 +265,12 @@ func HandleNoteSave(w http.ResponseWriter, r *http.Request) {
 
 // HandleNoteRemove removes a note from database.
 func HandleNoteRemove(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		ServeBadRequest(w, r)
+		return
+	}
+
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if !bson.IsObjectIdHex(idStr) {
@@ -276,6 +282,10 @@ func HandleNoteRemove(w http.ResponseWriter, r *http.Request) {
 	note, err := data.GetNote(id)
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
+	}
+	if note.AccountID != acc.ID {
+		ServeBadRequest(w, r)
 		return
 	}
 	if note == nil {
