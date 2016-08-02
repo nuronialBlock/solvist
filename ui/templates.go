@@ -44,7 +44,8 @@ var TplNoteNewForm = template.Must(template.ParseFiles("ui/templates/layout.goht
 
 // TplNotesListValues stores the value of notes.
 type TplNotesListValues struct {
-	Notes []data.Note
+	Common TplCommonValues
+	Notes  []data.Note
 }
 
 // TplNotesList serves the notes list page.

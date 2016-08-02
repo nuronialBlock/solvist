@@ -88,14 +88,23 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 
 // ServeNotesList renders the notes.
 func ServeNotesList(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
 	notes := []data.Note{}
-	notes, err := data.ListNotes()
+	notes, err := data.ListNotesByAccountID(acc.ID)
 	if err != nil {
 		ServeInternalServerError(w, r)
 		return
 	}
 
 	err = TplNotesList.Execute(w, TplNotesListValues{
+		Common: TplCommonValues{
+			Account: acc,
+		},
 		Notes: notes,
 	})
 	if err != nil {
