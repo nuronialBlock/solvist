@@ -153,6 +153,12 @@ func ServeNote(w http.ResponseWriter, r *http.Request) {
 
 // ServeNoteEditForm serves the edit form page.
 func ServeNoteEditForm(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if !bson.IsObjectIdHex(idStr) {
@@ -166,13 +172,20 @@ func ServeNoteEditForm(w http.ResponseWriter, r *http.Request) {
 		ServeInternalServerError(w, r)
 		return
 	}
+	if acc.ID != note.AccountID {
+		ServeBadRequest(w, r)
+		return
+	}
 	if note == nil {
 		ServeNotFound(w, r)
 		return
 	}
 
 	err = TplNoteEditForm.Execute(w, TplNoteEditFormValues{
-		Note: *note,
+		Common: TplCommonValues{
+			Account: acc,
+		},
+		Note: note,
 	})
 	if err != nil {
 		ServeInternalServerError(w, r)

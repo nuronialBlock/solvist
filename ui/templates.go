@@ -65,7 +65,8 @@ var TplNoteView = template.Must(TplNote.Funcs(template.FuncMap{"Markdown": Markd
 
 // TplNoteEditFormValues stores edited note values.
 type TplNoteEditFormValues struct {
-	Note data.Note
+	Common TplCommonValues
+	Note   *data.Note
 }
 
 // TplNoteEditForm render note edit form page.
