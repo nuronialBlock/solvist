@@ -49,6 +49,12 @@ type NoteValues struct {
 
 // HandleNoteCreate handles to create new note.
 func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		ServeBadRequest(w, r)
+		return
+	}
+
 	err := r.ParseForm()
 	if err != nil {
 		ServeInternalServerError(w, r)
@@ -69,13 +75,15 @@ func HandleNoteCreate(w http.ResponseWriter, r *http.Request) {
 	note.TopicName = formValues.TopicName
 	note.Catagory = formValues.Catagory
 	note.Text = formValues.Text
+	note.AccountID = acc.ID
 
 	err = note.Put()
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 
-	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
+	http.Redirect(w, r, "/notes", http.StatusSeeOther)
 }
 
 // ServeNotesList renders the notes.
