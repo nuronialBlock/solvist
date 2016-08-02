@@ -37,7 +37,7 @@ func GetNote(id bson.ObjectId) (*Note, error) {
 	return &note, nil
 }
 
-// ListNotes lits all notes.
+// ListNotes lists all notes.
 func ListNotes() ([]Note, error) {
 	notes := []Note{}
 	err := sess.DB("").C(noteC).Find(nil).All(&notes)
@@ -45,6 +45,18 @@ func ListNotes() ([]Note, error) {
 		return nil, err
 	}
 
+	return notes, nil
+}
+
+// ListNotesByAccountID takes account id as input,
+// returns array of notes if successful,
+// else return error.
+func ListNotesByAccountID(id bson.ObjectId) ([]Note, error) {
+	notes := []Note{}
+	err := sess.DB("").C(noteC).Find(bson.M{"account_id": id}).All(&notes)
+	if err != nil {
+		return nil, err
+	}
 	return notes, nil
 }
 
