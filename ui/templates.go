@@ -35,7 +35,9 @@ type TplTaskEditFormValues struct {
 var TplTaskEditForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/editTaskFormPage.gohtml", "ui/templates/editTaskForm.gohtml"))
 
 // TplNoteNewFormValues stores the new form values.
-type TplNoteNewFormValues struct{}
+type TplNoteNewFormValues struct {
+	Common TplCommonValues
+}
 
 // TplNoteNewForm generates new note form for user.
 var TplNoteNewForm = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/noteNewFormPage.gohtml", "ui/templates/noteNewForm.gohtml"))

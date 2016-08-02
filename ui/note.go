@@ -9,6 +9,7 @@ import (
 
 	"labix.org/v2/mgo/bson"
 
+	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/schema"
 	"github.com/microcosm-cc/bluemonday"
@@ -18,9 +19,20 @@ import (
 
 // ServeNoteNewForm serves a new note form.
 func ServeNoteNewForm(w http.ResponseWriter, r *http.Request) {
-	err := TplNoteNewForm.Execute(w, TplNoteNewFormValues{})
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
+	err := TplNoteNewForm.Execute(w, TplNoteNewFormValues{
+		Common: TplCommonValues{
+			Account: acc,
+		},
+	})
 	if err != nil {
 		ServeInternalServerError(w, r)
+		return
 	}
 }
 
