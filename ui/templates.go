@@ -53,7 +53,8 @@ var TplNotesList = template.Must(template.ParseFiles("ui/templates/layout.gohtml
 
 // TplNoteValues stores the note value for rendering a note.
 type TplNoteValues struct {
-	Note data.Note
+	Common TplCommonValues
+	Note   *data.Note
 }
 
 // TplNote stores note's template.

@@ -115,6 +115,12 @@ func ServeNotesList(w http.ResponseWriter, r *http.Request) {
 
 // ServeNote renders note of a given note ID.
 func ServeNote(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+
 	vars := mux.Vars(r)
 	idStr := vars["id"]
 	if !bson.IsObjectIdHex(idStr) {
@@ -128,9 +134,16 @@ func ServeNote(w http.ResponseWriter, r *http.Request) {
 		ServeInternalServerError(w, r)
 		return
 	}
+	if note.AccountID != acc.ID {
+		ServeBadRequest(w, r)
+		return
+	}
 
 	err = TplNoteView.Execute(w, TplNoteValues{
-		Note: *note,
+		Common: TplCommonValues{
+			Account: acc,
+		},
+		Note: note,
 	})
 	if err != nil {
 		ServeInternalServerError(w, r)
