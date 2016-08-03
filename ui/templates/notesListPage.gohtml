@@ -1,8 +1,14 @@
 {{define "content"}}
     <div class="row">
         <div class="col-md-12">
+            <form action="/notes/new">
+                <button type="submit" class="btn btn-primary">
+                    <span class="glyphicon glyphicon-pencil" aria-lebel="Left Align"></span> New Note
+                </button>
+            </form>
+            <hr>
             <div class="panel panel-default">
-                <div class="panel-heading">Notes</div>
+                <div class="panel-heading"><b>Notes</b></div>
                 <div class="panel-body">
                     {{template "notesList" .Notes}}
                 </div>

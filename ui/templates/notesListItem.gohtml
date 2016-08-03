@@ -1,23 +1,21 @@
-{{define "notesListview"}}
+{{define "notesListView"}}
     <li class="list-group-item">
         <tr>
             <td>
-                <b>Problem Name: </b> {{.ProblemName}}
-            </td>
-            <hr>
-            <td>
-                <b>Problem OJ: </b> {{.ProblemOJ}}
-            </td>
-            <hr>
-            <td>
-                <a href="{{.ProblemURL}}" class="btn btn-info" role="button">Problem Link</a>
-                <a href="notes/{{.ID.Hex}}" class="btn btn-primary" role="button">View</a>
-                <a href="notes/edit/{{.ID.Hex}}" class="btn btn-primary" role="button">Edit</a>
-            </td>
-            <hr>
-            <td>
-                <form action="notes/remove/{{.ID.Hex}}" method="post">
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                <h4><b>{{.ProblemName}}</b></h4>
+                <a class="btn btn-default btn-lg" href="{{.ProblemURL}}" style="text-decoration: none;">
+                    <span class="glyphicon glyphicon-link" aria-label="Left Align"></span>
+                </a>
+                <a class="btn btn-default btn-lg" href="notes/{{.ID.Hex}}" style="text-decoration: none;">
+                    <span class="glyphicon glyphicon-sunglasses" aria-label="Left Align"></span>
+                </a>
+                <a class="btn btn-default btn-lg" href="notes/edit/{{.ID.Hex}}" style="text-decoration: none;">
+                    <span class="glyphicon glyphicon-edit" aria-label="Left Align"></span>
+                </a>
+                <form action="notes/remove/{{.ID.Hex}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger btn-lg">
+                        <span class="glyphicon glyphicon-remove-sign" aria-label="Left Align"></span>
+                    </button>
                 </form>
             </td>
         </tr>
