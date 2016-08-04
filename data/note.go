@@ -17,7 +17,7 @@ type Note struct {
 	ProblemOJ   string `bson:"problem_oj"`
 	ProblemID   string `bson:"problem_id"`
 	ProblemURL  string `bson:"problem_url"`
-	Public      bool   `bson:"public"`
+	Public      int    `bson:"public"`
 
 	Text      string `bson:"text"`
 	TopicName string `bson:"topic_name"`
