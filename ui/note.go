@@ -202,6 +202,7 @@ type EditedNoteValues struct {
 	TopicName   string `schema:"topic"`
 	Catagory    string `schema:"catagory"`
 	Text        string `schema:"text"`
+	Public      bool   `schema:"public"`
 }
 
 // HandleNoteSave saves the edited info of a note.
@@ -253,6 +254,7 @@ func HandleNoteSave(w http.ResponseWriter, r *http.Request) {
 	note.TopicName = formValues.TopicName
 	note.Catagory = formValues.Catagory
 	note.Text = formValues.Text
+	note.Public = formValues.Public
 
 	err = note.Put()
 	if err != nil {

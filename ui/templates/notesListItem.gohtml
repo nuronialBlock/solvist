@@ -12,6 +12,17 @@
                 <a class="btn btn-default btn-lg" href="notes/edit/{{.ID.Hex}}" style="text-decoration: none;">
                     <span class="glyphicon glyphicon-edit" aria-label="Left Align"></span>
                 </a>
+
+                {{if .Public}}
+                    <button type="button" class="btn btn-success btn-lg">
+                            <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
+                    </button>
+                {{else}}
+                    <button type="button" class="btn btn-default btn-lg">
+                            <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
+                    </button>
+                {{end}}
+
                 <form action="notes/remove/{{.ID.Hex}}" method="post" style="display:inline;">
                     <button type="submit" class="btn btn-danger btn-lg">
                         <span class="glyphicon glyphicon-remove-sign" aria-label="Left Align"></span>

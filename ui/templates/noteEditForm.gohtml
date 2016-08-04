@@ -28,7 +28,13 @@
             <label for="text">Notes</label>
             <textarea class="form-control" id="text" name="text" rows="8" cols="40">{{.Text}}</textarea>
         </div>
-
+        <hr>
+        <div class="checkbox">
+            <label for="public">
+                <input type="checkbox" id="public" name="public" value={{.Public}}>
+                Make it Public
+            </label>
+        </div>
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
 {{end}}
