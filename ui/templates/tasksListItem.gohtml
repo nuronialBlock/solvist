@@ -4,23 +4,23 @@
     <li class="list-group-item">
         <tr>
             <td>
-                <b>problem Name:</b> {{.ProblemName}}
-            </td>
-            <hr>
-            <td>
-                <b>problem Source:</b> {{.ProblemOJ}}
-            </td>
-            <hr>
-            <td>
-                <a  href={{.ProblemURL}} role="button" class="btn btn-info">Problem Link</a>
-                <a  href="/tasks/edit/{{.ID.Hex}}" role="button" class="btn btn-primary">Edit</a>
-                <a  href="/notes/{{.NoteID.Hex}}" role="button" class="btn btn-primary">View Note</a>
-                <a  href="/notes/edit/{{.NoteID.Hex}}" role="button" class="btn btn-primary">Take Note</a>
-            </td>
-            <hr>
-            <td>
-                <form action="/tasks/remove/{{.ID.Hex}}" method="post">
-                    <button type="submit" class="btn btn-danger">Delete Task</button>
+                <h4><b>{{.ProblemName}}</b></h4>
+                <a href="{{.ProblemURL}}" target="_blank" role="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-link"></span>
+                </a>
+                <a href="/tasks/edit/{{.ID.Hex}}" role="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a  href="/notes/{{.NoteID.Hex}}" role="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-sunglasses"></span>
+                </a>
+                <a  href="/notes/edit/{{.NoteID.Hex}}" role="button" class="btn btn-default ">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <form action="/tasks/remove/{{.ID.Hex}}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
                 </form>
             </td>
         </tr>

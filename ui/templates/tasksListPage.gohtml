@@ -1,12 +1,18 @@
 {{/*Copyright 2016 The Solvist Author(s). All rights reserved. */}}
 
 {{define "content"}}
+    <form action="/tasks/new" method="get">
+        <button type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-pushpin"></span> New Task
+        </button>
+    </form>
+    <hr>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-heading">Tasks</div>
                     <div class="panel-body">
-                        {{template "listTasks" .Tasks}}
+                        {{template "tasksList" .Tasks}}
                     </div>
             </div>
         </div>

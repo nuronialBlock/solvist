@@ -1,13 +1,9 @@
 {{/*Copyright 2016 The Solvist Author(s). All rights reserved. */}}
 
-{{define "listTasks"}}
+{{define "tasksList"}}
     <div class="container">
-        <div class="row">
+    <div class="row">
             <div class="col-md-10">
-                <form action="/tasks/new" method="get">
-                    <button type="submit" class="btn btn-primary">New Task</button>
-                </form>
-                <hr>
                 {{range .}}
                     <ul class="list-group">
                         {{template "listTask" .}}
