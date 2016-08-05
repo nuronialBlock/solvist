@@ -49,6 +49,18 @@ func ListNotes() ([]Note, error) {
 	return notes, nil
 }
 
+// ListNotesByPublic if successful returns list of
+// all notes which are public, returns error.
+func ListNotesByPublic() ([]Note, error) {
+	notes := []Note{}
+	err := sess.DB("").C(noteC).Find(bson.M{"public": 1}).All(&notes)
+	if err != nil {
+		return nil, err
+	}
+
+	return notes, nil
+}
+
 // ListNotesByAccountID takes account id as input,
 // returns array of notes if successful,
 // else return error.
