@@ -4,6 +4,7 @@ package ui
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"net/http"
 
@@ -134,9 +135,11 @@ func ServeNote(w http.ResponseWriter, r *http.Request) {
 		ServeInternalServerError(w, r)
 		return
 	}
-	if note.AccountID != acc.ID {
-		ServeBadRequest(w, r)
-		return
+	if note.Public == 0 {
+		if note.AccountID != acc.ID {
+			ServeBadRequest(w, r)
+			return
+		}
 	}
 
 	err = TplNoteView.Execute(w, TplNoteValues{
@@ -304,6 +307,33 @@ func HandleNoteRemove(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/notes", http.StatusSeeOther)
 }
 
+// ServePublicNotes serves notes which have been
+// made public by the users.
+func ServePublicNotes(w http.ResponseWriter, r *http.Request) {
+	acc, ok := context.Get(r, "account").(*data.Account)
+	if !ok || acc == nil {
+		http.Redirect(w, r, "/login", http.StatusFound)
+		return
+	}
+	notes, err := data.ListNotesByPublic()
+	if err != nil {
+		ServeInternalServerError(w, r)
+		return
+	}
+
+	err = TplPublicNotes.Execute(w, TplPublicNotesValues{
+		Common: TplCommonValues{
+			Account: acc,
+		},
+		Notes: notes,
+	})
+	if err != nil {
+		fmt.Println(err)
+		ServeInternalServerError(w, r)
+		return
+	}
+}
+
 // Markdown parse a Markdown to HTML.
 func Markdown(m string) template.HTML {
 	textBytes := bytes.NewBufferString(m).Bytes()
@@ -341,4 +371,8 @@ func init() {
 		Methods("Post").
 		Path("/notes/remove/{id}").
 		HandlerFunc(HandleNoteRemove)
+	Router.NewRoute().
+		Methods("Get").
+		Path("/public").
+		HandlerFunc(ServePublicNotes)
 }
