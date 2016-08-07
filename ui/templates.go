@@ -92,3 +92,12 @@ type TplRegisterValues struct {
 
 // TplRegister renders the register form.
 var TplRegister = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/registerPage.gohtml", "ui/templates/register.gohtml"))
+
+// TplPublicNotesValues stores public notes.
+type TplPublicNotesValues struct {
+	Common TplCommonValues
+	Notes  []data.Note
+}
+
+// TplPublicNotes renders public notes.
+var TplPublicNotes = template.Must(template.ParseFiles("ui/templates/layout.gohtml", "ui/templates/publicNotesPage.gohtml", "ui/templates/publicNotes.gohtml", "ui/templates/publicNotesItem.gohtml"))

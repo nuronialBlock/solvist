@@ -1,0 +1,14 @@
+{{define "publicNotes"}}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10">
+                <ul class="list-group">
+                    {{range .Notes}}
+                        {{template "publicNotesItem" .}}
+                    {{end}}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{{end}}
