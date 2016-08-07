@@ -258,6 +258,7 @@ func HandleNoteSave(w http.ResponseWriter, r *http.Request) {
 	note.Catagory = formValues.Catagory
 	note.Text = formValues.Text
 	note.Public = formValues.Public
+	note.Writer = acc.Handle
 
 	err = note.Put()
 	if err != nil {
