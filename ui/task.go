@@ -144,23 +144,6 @@ func HandleTaskRemove(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	note, err := data.GetNote(task.NoteID)
-	if err != nil {
-		ServeInternalServerError(w, r)
-		return
-	}
-	if note == nil {
-		ServeInternalServerError(w, r)
-		return
-	}
-	if note.ModifiedAt == note.CreatedAt {
-		note.Remove()
-		if err != nil {
-			ServeInternalServerError(w, r)
-			return
-		}
-	}
-
 	err = task.Remove()
 	if err != nil {
 		ServeInternalServerError(w, r)
