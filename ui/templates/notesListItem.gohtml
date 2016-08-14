@@ -4,28 +4,28 @@
             <td>
                 <h4><b>{{.ProblemName}}</b></h4>
                 <a title="Problem Link" class="btn btn-default" href="{{.ProblemURL}}" target="_blank" style="text-decoration: none;">
-                    <span class="glyphicon glyphicon-link" aria-label="Left Align"></span>
+                    <span class="glyphicon glyphicon-link" aria-label="Problem Link"></span>
                 </a>
                 <a title="View Note" class="btn btn-default" href="notes/{{.ID.Hex}}" style="text-decoration: none;">
-                    <span class="glyphicon glyphicon-sunglasses" aria-label="Left Align"></span>
+                    <span class="glyphicon glyphicon-sunglasses" aria-label="View Note"></span>
                 </a>
                 <a title="Edit Note" class="btn btn-default" href="notes/edit/{{.ID.Hex}}" style="text-decoration: none;">
-                    <span class="glyphicon glyphicon-edit" aria-label="Left Align"></span>
+                    <span class="glyphicon glyphicon-edit" aria-label="Edit Note"></span>
                 </a>
 
                 {{if .Public}}
                     <button title="Public" type="button" class="btn btn-default">
-                            <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
+                            <span class="glyphicon glyphicon-globe" aria-label="Public"></span>
                     </button>
                 {{else}}
                     <button title="Private" type="button" class="btn btn-default" disabled>
-                            <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
+                            <span class="glyphicon glyphicon-globe" aria-label="Private"></span>
                     </button>
                 {{end}}
 
                 <form action="notes/remove/{{.ID.Hex}}" method="post" style="display:inline;">
                     <button title="Delete Note" type="submit" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-remove" aria-label="Left Align"></span>
+                        <span class="glyphicon glyphicon-remove" aria-label="Delete Note"></span>
                     </button>
                 </form>
             </td>
