@@ -3,28 +3,28 @@
         <tr>
             <td>
                 <h4><b>{{.ProblemName}}</b></h4>
-                <a class="btn btn-default" href="{{.ProblemURL}}" target="_blank" style="text-decoration: none;">
+                <a title="Problem Link" class="btn btn-default" href="{{.ProblemURL}}" target="_blank" style="text-decoration: none;">
                     <span class="glyphicon glyphicon-link" aria-label="Left Align"></span>
                 </a>
-                <a class="btn btn-default" href="notes/{{.ID.Hex}}" style="text-decoration: none;">
+                <a title="View Note" class="btn btn-default" href="notes/{{.ID.Hex}}" style="text-decoration: none;">
                     <span class="glyphicon glyphicon-sunglasses" aria-label="Left Align"></span>
                 </a>
-                <a class="btn btn-default" href="notes/edit/{{.ID.Hex}}" style="text-decoration: none;">
+                <a title="Edit Note" class="btn btn-default" href="notes/edit/{{.ID.Hex}}" style="text-decoration: none;">
                     <span class="glyphicon glyphicon-edit" aria-label="Left Align"></span>
                 </a>
 
                 {{if .Public}}
-                    <button type="button" class="btn btn-default">
+                    <button title="Public" type="button" class="btn btn-default">
                             <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
                     </button>
                 {{else}}
-                    <button type="button" class="btn btn-default" disabled>
+                    <button title="Private" type="button" class="btn btn-default" disabled>
                             <span class="glyphicon glyphicon-globe" aria-label="Left Align"></span>
                     </button>
                 {{end}}
 
                 <form action="notes/remove/{{.ID.Hex}}" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-danger">
+                    <button title="Delete Note" type="submit" class="btn btn-danger">
                         <span class="glyphicon glyphicon-remove" aria-label="Left Align"></span>
                     </button>
                 </form>
