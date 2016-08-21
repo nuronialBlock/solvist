@@ -3,6 +3,7 @@
 package ui
 
 import (
+	"fmt"
 	"net/http"
 
 	"labix.org/v2/mgo"
@@ -26,6 +27,7 @@ func ServeLogInForm(w http.ResponseWriter, r *http.Request) {
 		},
 	})
 	if err != nil {
+		fmt.Println(err)
 		ServeInternalServerError(w, r)
 		return
 	}

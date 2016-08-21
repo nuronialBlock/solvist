@@ -16,6 +16,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	err = data.MakeIndex()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	http.Handle("/", ui.NewServer())
 
