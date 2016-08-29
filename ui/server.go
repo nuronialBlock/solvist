@@ -5,6 +5,7 @@ package ui
 import (
 	"net/http"
 
+	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 
 	"github.com/gorilla/context"
@@ -42,11 +43,17 @@ func (s Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		acc, err := data.GetAccount(bson.ObjectIdHex(accID))
-		if err != nil {
+		if err == mgo.ErrNotFound {
+			delete(sess.Values, "accountID")
+			sess.Save(r, w)
+		} else if err != nil {
 			ServeInternalServerError(w, r)
 			return
 		}
 		context.Set(r, "account", acc)
+	} else {
+		delete(sess.Values, "accountID")
+		sess.Save(r, w)
 	}
 
 	s.router.ServeHTTP(w, r)
