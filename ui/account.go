@@ -145,6 +145,7 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 
 	err = acc1.Put()
 	if err != nil {
+		fmt.Println(err)
 		ServeInternalServerError(w, r)
 		return
 	}
