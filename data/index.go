@@ -5,7 +5,7 @@ import "labix.org/v2/mgo"
 var indices = map[string][]mgo.Index{
 	accountC: {
 		{
-			Key:    []string{"handle"},
+			Key:    []string{"handle", "emails.address_norm"},
 			Unique: true,
 		},
 	},
