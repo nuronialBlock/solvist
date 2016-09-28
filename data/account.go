@@ -7,6 +7,7 @@ package data
 import (
 	"time"
 
+	"labix.org/v2/mgo"
 	"labix.org/v2/mgo/bson"
 )
 
@@ -59,6 +60,12 @@ func ListAccounts() ([]Account, error) {
 	}
 
 	return accs, nil
+}
+
+// IsDup checks for duplicate key error for account.
+func (a *Account) IsDup() bool {
+	err := a.Put()
+	return mgo.IsDup(err)
 }
 
 // Put puts data in the database.

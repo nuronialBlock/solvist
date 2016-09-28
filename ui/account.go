@@ -143,6 +143,11 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	}
 	acc1.Password = ap
 
+	if acc1.IsDup() {
+		ServeHandleOREmailDuplicate(w, r)
+		return
+	}
+
 	err = acc1.Put()
 	if err != nil {
 		fmt.Println(err)

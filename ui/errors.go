@@ -24,3 +24,8 @@ func ServeBadRequest(w http.ResponseWriter, r *http.Request) {
 func ServeHandleIncorrect(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Handle Incorrect", http.StatusNotFound)
 }
+
+// ServeHandleOREmailDuplicate informs about the duplicacy.
+func ServeHandleOREmailDuplicate(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Sorry! Someone has already snacthed that handle ", http.StatusBadRequest)
+}
