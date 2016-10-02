@@ -27,5 +27,30 @@ func ServeHandleIncorrect(w http.ResponseWriter, r *http.Request) {
 
 // ServeHandleOREmailDuplicate informs about the duplicacy.
 func ServeHandleOREmailDuplicate(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, "Sorry! Someone has already snacthed that handle or email", http.StatusBadRequest)
+	http.Error(w, "Sorry! Someone has already snatched that handle or email.", http.StatusBadRequest)
+}
+
+// ServeNameShort complains about the short naming.
+func ServeNameShort(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Full name needs to be at least 5 letters long.", http.StatusBadRequest)
+}
+
+// ServeHandleShort complains about short handle.
+func ServeHandleShort(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Handle needs to be at least 3 letters long.", http.StatusBadRequest)
+}
+
+// ServeCountryShort complains about short country name.
+func ServeCountryShort(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Country name needs to be at least 2 letters long.", http.StatusBadRequest)
+}
+
+// ServeUniversityShort complains about short university name.
+func ServeUniversityShort(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "University name needs to be at least 2 letters long.", http.StatusBadRequest)
+}
+
+// ServeInvalidEmail complains about invalid email address.
+func ServeInvalidEmail(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Invalid email address", http.StatusBadRequest)
 }

@@ -129,9 +129,24 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	acc1.University = body.University
 	acc1.Country = body.Country
 
+	switch {
+	case len(acc1.Name) < 5:
+		ServeNameShort(w, r)
+		return
+	case len(acc1.Handle) < 3:
+		ServeHandleShort(w, r)
+		return
+	case len(acc1.University) < 2:
+		ServeUniversityShort(w, r)
+		return
+	case len(acc1.Country) < 2:
+		ServeCountryShort(w, r)
+		return
+	}
+
 	ae, err := data.NewAccountEmail(body.Email)
 	if err != nil {
-		ServeInternalServerError(w, r)
+		ServeInvalidEmail(w, r)
 		return
 	}
 	acc1.Emails = append(acc1.Emails, ae)
