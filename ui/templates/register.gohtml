@@ -1,0 +1,29 @@
+{{define "register"}}
+    <form action="/register" method="post">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" pattern="^[a-zA-Z ]{5,}$" title="Full name needs to be at least 5 letters long." class="form-control" id="name" name="name" placeholder="Full Name">
+        </div>
+        <div class="form-group">
+            <label for="handle">Handle (Use A-Z a-z 0-9_)</label>
+            <input type="text" pattern="^[a-zA-Z0-9_]{3,}$" title="Handle needs to be at least 3 letters long." class="form-control" id="handle" name="handle" placeholder="Handle">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <label for="university">University</label>
+            <input type="text" pattern="^[a-zA-Z]{2,}$" title="University name needs to be at least 2 letters long." class="form-control" id="university" name="university" placeholder="university">
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" pattern="^[a-zA-Z]{2,}$" title="Country name needs to be at least 2 letters long." class="form-control" id="country" name="country" placeholder="Country">
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+{{end}}

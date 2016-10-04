@@ -1,0 +1,28 @@
+{{/*Copyright 2016 The Solvist Author(s). All rights reserved. */}}
+
+{{define "listTask"}}
+    <li class="list-group-item">
+        <tr>
+            <td>
+                <h4><b>{{.ProblemName}}</b></h4>
+                <a title="Problem Link" href="{{.ProblemURL}}" target="_blank" role="button" class="btn btn-default " aria-label="Problem Link">
+                    <span class="glyphicon glyphicon-link"></span>
+                </a>
+                <a title="Task Edit" href="/tasks/edit/{{.ID.Hex}}" role="button" class="btn btn-default " aria-label="Task Edit">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <a title="View Task"  href="/notes/{{.NoteID.Hex}}" role="button" class="btn btn-default " aria-label="View Task">
+                    <span class="glyphicon glyphicon-sunglasses"></span>
+                </a>
+                <a title="Edit Note"  href="/notes/edit/{{.NoteID.Hex}}" role="button" class="btn btn-default " aria-label="Edit Note">
+                    <span class="glyphicon glyphicon-pencil"></span>
+                </a>
+                <form action="/tasks/remove/{{.ID.Hex}}" method="post" style="display:inline;">
+                    <button title="Done" type="submit" class="btn btn-success" aria-label="Done">
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </button>
+                </form>
+            </td>
+        </tr>
+    </li>
+{{end}}
