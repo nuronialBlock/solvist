@@ -54,3 +54,8 @@ func ServeUniversityShort(w http.ResponseWriter, r *http.Request) {
 func ServeInvalidEmail(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Invalid email address", http.StatusBadRequest)
 }
+
+// ServeHandlePatternNotMatch complains about user handle pattern while registering.
+func ServeHandlePatternNotMatch(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Please, use 0-9 A-Z a-z _ for handle.", http.StatusBadRequest)
+}

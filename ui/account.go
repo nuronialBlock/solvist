@@ -5,6 +5,7 @@ package ui
 import (
 	"fmt"
 	"net/http"
+	"regexp"
 
 	"labix.org/v2/mgo"
 
@@ -128,6 +129,14 @@ func HandleRegister(w http.ResponseWriter, r *http.Request) {
 	acc1.Handle = body.Handle
 	acc1.University = body.University
 	acc1.Country = body.Country
+
+	h := []byte(acc1.Handle)
+	re := regexp.MustCompile(`[^[:word:]]`)
+	m := re.Match(h)
+	if m {
+		ServeHandlePatternNotMatch(w, r)
+		return
+	}
 
 	switch {
 	case len(acc1.Name) < 5:
