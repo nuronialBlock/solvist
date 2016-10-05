@@ -5,7 +5,7 @@ package data
 import (
 	"time"
 
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // Task stores the task informations of an user.

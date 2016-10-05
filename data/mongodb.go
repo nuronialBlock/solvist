@@ -3,7 +3,7 @@
 package data
 
 import (
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 )
 
 var sess *mgo.Session

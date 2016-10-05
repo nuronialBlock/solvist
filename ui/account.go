@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"labix.org/v2/mgo"
+	"gopkg.in/mgo.v2"
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/schema"

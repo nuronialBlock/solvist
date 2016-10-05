@@ -1,6 +1,6 @@
 package data
 
-import "labix.org/v2/mgo"
+import "gopkg.in/mgo.v2"
 
 var indices = map[string][]mgo.Index{
 	accountC: {

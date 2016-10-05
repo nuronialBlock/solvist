@@ -8,7 +8,7 @@ import (
 	"html/template"
 	"net/http"
 
-	"labix.org/v2/mgo/bson"
+	"gopkg.in/mgo.v2/bson"
 
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
