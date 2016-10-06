@@ -2,5 +2,85 @@
 	"ImportPath": "github.com/nuronialBlock/solvist/solvist",
 	"GoVersion": "go1.6",
 	"GodepVersion": "v74",
-	"Deps": []
+	"Packages": [
+		"./cmd/solvistd"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/asaskevich/govalidator",
+			"Comment": "v4-12-g593d645",
+			"Rev": "593d64559f7600f29581a3ee42177f5dbded27a9"
+		},
+		{
+			"ImportPath": "github.com/gorilla/context",
+			"Rev": "1c83b3eabd45b6d76072b66b746c20815fb2872d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/mux",
+			"Rev": "26a6070f849969ba72b72256e9f14cf519751690"
+		},
+		{
+			"ImportPath": "github.com/gorilla/schema",
+			"Rev": "08023a0215e7fc27a9aecd8b8c50913c40019478"
+		},
+		{
+			"ImportPath": "github.com/gorilla/securecookie",
+			"Comment": "v1.1-2-gff35634",
+			"Rev": "ff356348f74133a59d3e93aa24b5b4551b6fe90d"
+		},
+		{
+			"ImportPath": "github.com/gorilla/sessions",
+			"Rev": "56ba4b0a11da87516629a57408a5f7e4c8ea7b0b"
+		},
+		{
+			"ImportPath": "github.com/microcosm-cc/bluemonday",
+			"Rev": "4ac6f27528d0a3f2a59e0b0a6f6b3ff0bb89fe20"
+		},
+		{
+			"ImportPath": "github.com/russross/blackfriday",
+			"Comment": "v1.4-31-g2004188",
+			"Rev": "2004188462c3946efefbdcd91aa83e49b4175bfb"
+		},
+		{
+			"ImportPath": "github.com/shurcooL/sanitized_anchor_name",
+			"Rev": "10ef21a441db47d8b13ebcc5fd2310f636973c77"
+		},
+		{
+			"ImportPath": "golang.org/x/crypto/pbkdf2",
+			"Rev": "3760e016850398b85094c4c99e955b8c3dea5711"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "8a52c78636f6b7be1b1e5cb58b01a85f1e082659"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "8a52c78636f6b7be1b1e5cb58b01a85f1e082659"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2",
+			"Comment": "r2016.08.01-5-g3f83fa5",
+			"Rev": "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/bson",
+			"Comment": "r2016.08.01-5-g3f83fa5",
+			"Rev": "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/json",
+			"Comment": "r2016.08.01-5-g3f83fa5",
+			"Rev": "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/sasl",
+			"Comment": "r2016.08.01-5-g3f83fa5",
+			"Rev": "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+		},
+		{
+			"ImportPath": "gopkg.in/mgo.v2/internal/scram",
+			"Comment": "r2016.08.01-5-g3f83fa5",
+			"Rev": "3f83fa5005286a7fe593b055f0d7771a7dce4655"
+		}
+	]
 }
