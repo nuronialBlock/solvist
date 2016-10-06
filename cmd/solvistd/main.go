@@ -23,9 +23,14 @@ func main() {
 
 	http.Handle("/", ui.NewServer())
 
-	log.Printf("Lightening on %s", os.Getenv("PORT"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
 
-	err = http.ListenAndServe(os.Getenv("PORT"), nil)
+	log.Printf("Lightening on %s", port)
+
+	err = http.ListenAndServe(":"+port, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
