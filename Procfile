@@ -1,1 +1,1 @@
-web: solvist
+web: solvistd
