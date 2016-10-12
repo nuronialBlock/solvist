@@ -1,1 +1,1 @@
-web: solvistd
+web: solvistd -port $PORT
