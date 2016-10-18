@@ -1,2 +1,1 @@
-web: solvist
-worker: cmd/solvistd
+web: solvistd
