@@ -1,1 +1,2 @@
-web: solvistd -port $PORT
+web: solvist
+worker: cmd/solvistd
