@@ -1,1 +1,1 @@
-web: $GOPATH/bin/solvistd -port $PORT
+web: solvistd -port=$PORT
