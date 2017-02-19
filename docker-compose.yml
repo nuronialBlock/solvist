@@ -1,0 +1,29 @@
+version: "2"
+
+services:
+
+  solvist:
+    build:
+      context: .
+      #dockerfile: Dockerfile-alternate
+    image: solvist/solvist     # renames the built image if context is present
+    container_name: solvist
+    command: sh scripts/wait.sh
+    environment:
+      - MONGO_URL=mongodb://solvist_db:27017/solvist
+    ports:
+      - "8080:8080"
+    depends_on:
+      - solvist_db
+    links:
+      - solvist_db
+    tty: true
+
+  solvist_db:
+    image: mongo:3.4
+    container_name: solvist_db
+    expose:
+      - "27017"
+      - "28017" # web status page
+    # volumes:
+    #   - ./data/db:/data/db:rw         # with read and write access
